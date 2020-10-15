@@ -1,6 +1,4 @@
-MIT License
-
-Copyright (c) 2020 Dreamy Cecil
+/* Copyright (c) 2020 Dreamy Cecil
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -18,4 +16,24 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SOFTWARE. */
+
+#pragma once
+
+#include "DataArray.h"
+
+// Data list
+DS_TEMP class CDList : public CDArray<cType> {
+public:
+  // Add new element to the list
+  inline int Add(cType pObject);
+  // Insert new element somewhere in the list
+  inline void Insert(const int &iPos, cType pObject);
+  // Delete some element
+  inline void Delete(const int &iPos);
+
+  // Find index of a specific element
+  int FindIndex(cType pObject);
+};
+
+#include "DataList.inl"

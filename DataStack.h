@@ -1,6 +1,4 @@
-MIT License
-
-Copyright (c) 2020 Dreamy Cecil
+/* Copyright (c) 2020 Dreamy Cecil
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -18,4 +16,25 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+SOFTWARE. */
+
+#pragma once
+
+#include "DataList.h"
+
+// Data stack
+DS_TEMP class CDStack : public CDList<cType> {
+public:
+  // Add new element to the end of the stack
+  inline int Push(cType pObject);
+  
+  // Get the top element from the stack
+  inline cType &Top(void);
+  
+  // Remove one element from the end of the stack
+  inline cType Pop(void);
+  // Remove elements from the end of the stack until a certain element
+  int PopUntil(cType pUntil);
+};
+
+#include "DataStack.inl"
