@@ -12,12 +12,12 @@
 using namespace std;
 
 // Names
-const string _astrNames[5] = {
+static const string _astrNames[5] = {
   "Aaron", "Charlie", "Jake", "Harry", "Vincent",
 };
 
 // Ages
-const int _aiAges[5] = {
+static const int _aiAges[5] = {
   30, 22, 15, 47, 26,
 };
 
@@ -38,6 +38,7 @@ int main() {
     aiArray.Resize(3);
     aiArray[2] = 333;
     
+    // Print the array contents
     cout << "-- Array:";
     
     for (int i = 0; i < aiArray.Count(); i++) {
@@ -57,7 +58,7 @@ int main() {
     // Add 5 strings
     for (int i = 0; i < 5; i++) {
       int iStr = astrNames.Add(new string);
-      *astrNames[iStr] = _astrNames[iStr];
+      *astrNames[iStr] = _astrNames[i];
       
       cout << "Added " << *astrNames[iStr] << "\n";
     }
@@ -81,7 +82,7 @@ int main() {
       mapAges[strName] = iAge;
       
       // Also valid
-      // mapAges.Add(strName, cAge);
+      // mapAges.Add(strName, iAge);
     }
     
     // Another map
@@ -93,10 +94,14 @@ int main() {
     // Add people from another map (and replace values under existing keys)
     mapMoreAges.AddFrom(mapAges, true);
     
+    // Print the map contents
     cout << "\n-- Map:\n";
     
     for (int iMap = 0; iMap < mapMoreAges.Count(); iMap++) {
-      cout << mapMoreAges.GetKey(iMap) << ", age " << mapMoreAges.GetValue(iMap) << "\n";
+      string strKey = mapMoreAges.GetKey(iMap);
+      int iValue = mapMoreAges.GetValue(iMap);
+      
+      cout << strKey << ", age " << iValue << "\n";
     }
   }
   
@@ -117,6 +122,7 @@ int main() {
     // Pop until the certain number
     aStack.PopUntil(38);
     
+    // Print the stack contents
     cout << "Remaining:";
     
     for (int iStack = 0; iStack < aStack.Count(); iStack++) {
