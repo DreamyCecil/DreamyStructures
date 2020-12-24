@@ -1,3 +1,23 @@
+/* Copyright (c) 2020 Dreamy Cecil
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. */
+
 #ifndef NULL
   #define NULL nullptr
 #endif
@@ -9,7 +29,7 @@
 // Strings
 #include <string>
 
-using namespace std;
+typedef std::string string;
 
 // Names
 static const string _astrNames[5] = {
@@ -39,13 +59,13 @@ int main() {
     aiArray[2] = 333;
     
     // Print the array contents
-    cout << "-- Array:";
+    std::cout << "-- Array:";
     
     for (int i = 0; i < aiArray.Count(); i++) {
-      cout << " " << aiArray[i];
+      std::cout << " " << aiArray[i];
     }
     
-    cout << "\n";
+    std::cout << "\n";
   }
   
   // Lists
@@ -53,14 +73,15 @@ int main() {
     // List of pointers
     CDList<string *> astrNames;
     
-    cout << "\n-- List:\n";
+    std::cout << "\n-- List:\n";
     
     // Add 5 strings
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++)
+    {
       int iStr = astrNames.Add(new string);
       *astrNames[iStr] = _astrNames[i];
       
-      cout << "Added " << *astrNames[iStr] << "\n";
+      std::cout << "Added " << *astrNames[iStr] << "\n";
     }
     
     // Delete strings
@@ -75,10 +96,12 @@ int main() {
     CAgeMap mapAges;
     
     // Set ages
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 5; i++)
+    {
       string strName = _astrNames[i];
       int iAge = _aiAges[i];
       
+      // Might not work correctly on some compilers, consider the line below
       mapAges[strName] = iAge;
       
       // Also valid
@@ -95,13 +118,14 @@ int main() {
     mapMoreAges.AddFrom(mapAges, true);
     
     // Print the map contents
-    cout << "\n-- Map:\n";
+    std::cout << "\n-- Map:\n";
     
-    for (int iMap = 0; iMap < mapMoreAges.Count(); iMap++) {
+    for (int iMap = 0; iMap < mapMoreAges.Count(); iMap++)
+    {
       string strKey = mapMoreAges.GetKey(iMap);
       int iValue = mapMoreAges.GetValue(iMap);
       
-      cout << strKey << ", age " << iValue << "\n";
+      std::cout << strKey << ", age " << iValue << "\n";
     }
   }
   
@@ -109,27 +133,28 @@ int main() {
   {
     CDStack<short> aStack;
     
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 10; i++)
+    {
       short iNum = (i*i + 2);
       aStack.Push(iNum);
     }
     
-    cout << "\n-- Stack:\n";
+    std::cout << "\n-- Stack:\n";
     
     // Get the top value
-    cout << "Top: " << aStack.Top() << "\n";
+    std::cout << "Top: " << aStack.Top() << "\n";
     
     // Pop until the certain number
     aStack.PopUntil(38);
     
     // Print the stack contents
-    cout << "Remaining:";
+    std::cout << "Remaining:";
     
     for (int iStack = 0; iStack < aStack.Count(); iStack++) {
-      cout << " " << aStack[iStack];
+      std::cout << " " << aStack[iStack];
     }
     
-    cout << "\n";
+    std::cout << "\n";
   }
   
   return 0;
