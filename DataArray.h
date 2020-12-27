@@ -24,42 +24,42 @@ SOFTWARE. */
 
 // Data array
 DS_TEMP class CDArray {
-protected:
-  int da_ctSize;
-  cType *da_aArray;
+  protected:
+    int da_ctSize;
+    cType *da_aArray;
 
-public:
-  // Constructors & Destructor
-  inline CDArray(void);
-  inline CDArray(const CDArray<cType> &aOriginal);
-  inline ~CDArray(void);
+  public:
+    // Constructors & Destructor
+    inline CDArray(void);
+    inline CDArray(const CDArray<cType> &aOriginal);
+    inline ~CDArray(void);
 
-  // Reset the array
-  inline void Reset(void);
-  // New array
-  inline void New(int iCount);
-  // Resize the array
-  inline void Resize(int iNewCount);
-  // Clear the array
-  inline void Clear(void);
+    // Reset the array
+    inline void Reset(void);
+    // New array
+    inline void New(int iCount);
+    // Resize the array
+    inline void Resize(int iNewCount);
+    // Clear the array
+    inline void Clear(void);
 
-  // Get the element
-  inline cType &operator[](int iObject);
-  inline const cType &operator[](int iObject) const;
+    // Get the element
+    inline cType &operator[](int iObject);
+    inline const cType &operator[](int iObject) const;
 
-  // Count elements
-  int Count(void);
-  const int Count(void) const;
-  // Element index in the array
-  int Index(cType *pObject);
+    // Count elements
+    int Count(void);
+    const int Count(void) const;
+    // Element index in the array
+    int Index(cType *pObject);
 
-  // Copy elements from the other array
-  void CopyArray(const CDArray<cType> &aOriginal);
-  // Move elements from one array to this one
-  void MoveArray(CDArray<cType> &aOther);
+    // Copy elements from the other array
+    void CopyArray(const CDArray<cType> &aOriginal);
+    // Move elements from one array to this one
+    void MoveArray(CDArray<cType> &aOther);
 
-  // Assignment
-  CDArray<cType> &operator=(const CDArray<cType> &aOther);
+    // Assignment
+    CDArray<cType> &operator=(const CDArray<cType> &aOther);
 };
 
 #include "DataArray.inl"

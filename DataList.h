@@ -24,16 +24,16 @@ SOFTWARE. */
 
 // Data list
 DS_TEMP class CDList : public CDArray<cType> {
-public:
-  // Add new element to the list
-  inline int Add(cType pObject);
-  // Insert new element somewhere in the list
-  inline void Insert(const int &iPos, cType pObject);
-  // Delete some element
-  inline void Delete(const int &iPos);
+  public:
+    // Add new element to the list
+    inline int Add(cType pObject);
+    // Insert new element somewhere in the list
+    inline void Insert(const int &iPos, cType pObject);
+    // Delete some element
+    inline void Delete(const int &iPos);
 
-  // Find index of a specific element
-  int FindIndex(cType pObject);
+    // Find index of a specific element
+    int FindIndex(cType pObject);
 };
 
 #include "DataList.inl"

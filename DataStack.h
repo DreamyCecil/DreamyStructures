@@ -24,17 +24,17 @@ SOFTWARE. */
 
 // Data stack
 DS_TEMP class CDStack : public CDList<cType> {
-public:
-  // Add new element to the end of the stack
-  inline int Push(cType pObject);
+  public:
+    // Add new element to the end of the stack
+    inline int Push(cType pObject);
   
-  // Get the top element from the stack
-  inline cType &Top(void);
+    // Get the top element from the stack
+    inline cType &Top(void);
   
-  // Remove one element from the end of the stack
-  inline cType Pop(void);
-  // Remove elements from the end of the stack until a certain element
-  int PopUntil(cType pUntil);
+    // Remove one element from the end of the stack
+    inline cType Pop(void);
+    // Remove elements from the end of the stack until a certain element
+    int PopUntil(cType pUntil);
 };
 
 #include "DataStack.inl"
