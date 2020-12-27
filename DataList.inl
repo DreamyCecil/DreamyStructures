@@ -93,6 +93,10 @@ DS_TEMP void CDList<cType>::Delete(const int &iPos) {
 
 // Find index of a specific element
 DS_TEMP int CDList<cType>::FindIndex(cType pObject) {
+  return ((const CDList<cType>*)this)->FindIndex(pObject);
+};
+
+DS_TEMP const int CDList<cType>::FindIndex(cType pObject) const {
   const int ctObjects = this->Count();
 
   for (int i = 0; i < ctObjects; i++) {

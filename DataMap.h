@@ -45,6 +45,7 @@ MAP_TEMP class CDMap : public CDArray<cType> {
 
     // Find index of a specific key
     inline int FindKeyIndex(cKey mapKey);
+    inline const int FindKeyIndex(cKey mapKey) const;
     // Get the key under some index
     inline cKey &GetKey(int iValue);
   

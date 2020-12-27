@@ -34,6 +34,7 @@ DS_TEMP class CDList : public CDArray<cType> {
 
     // Find index of a specific element
     int FindIndex(cType pObject);
+    const int FindIndex(cType pObject) const;
 };
 
 #include "DataList.inl"

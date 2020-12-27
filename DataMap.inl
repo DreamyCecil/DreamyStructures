@@ -82,6 +82,10 @@ MAP_TEMP void CDMap<cKey, cType>::Delete(cKey mapKey) {
 
 // Find index of a specific key
 MAP_TEMP int CDMap<cKey, cType>::FindKeyIndex(cKey mapKey) {
+  return ((const CDMap<cKey, cType>*)this)->FindKeyIndex(mapKey);
+};
+
+MAP_TEMP const int CDMap<cKey, cType>::FindKeyIndex(cKey mapKey) const {
   return map_aKeys.FindIndex(mapKey);
 };
 
