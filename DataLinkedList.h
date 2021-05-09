@@ -1,4 +1,4 @@
-/* Copyright (c) 2020-2021 Dreamy Cecil
+/* Copyright (c) 2021 Dreamy Cecil
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -20,11 +20,45 @@ SOFTWARE. */
 
 #pragma once
 
-#include "DataArray.h"
+#include "DataTemplates.h"
 
-// Data list
-DS_TEMP class CDList : public CDArray<cType> {
+DS_TEMP class CDLinked;
+
+// Data node
+DS_TEMP class CDNode {
   public:
+    CDLinked<cType> *dn_pList; // list this node belongs to
+
+    CDNode<cType> *dn_pPrev; // previous node
+    CDNode<cType> *dn_pNext; // next node
+
+    cType dn_Value; // value itself
+
+  public:
+    // Constructors
+    inline CDNode(void);
+    inline CDNode(CDLinked<cType> *pList, cType *pValue);
+
+    // Type casting
+    operator cType() {
+      return dn_Value;
+    };
+};
+
+// Linked data list
+DS_TEMP class CDLinked {
+  public:
+    CDNode<cType> *dl_dnHead; // head of the list
+    CDNode<cType> *dl_dnTail; // tail of the list
+    
+  public:
+    // Constructor & Destructor
+    inline CDLinked(void);
+    inline ~CDLinked(void);
+
+    // Clear the list
+    inline void Clear(void);
+
     // Add new element to the list
     inline int Add(cType pObject);
     // Insert new element somewhere in the list
@@ -32,9 +66,22 @@ DS_TEMP class CDList : public CDArray<cType> {
     // Delete some element
     inline void Delete(const int &iPos);
 
-    // Find index of a specific element
+    // Get the node
+    inline CDNode<cType> &operator[](int iObject);
+    inline const CDNode<cType> &operator[](int iObject) const;
+
+    // Count nodes
+    int Count(void) const;
+    // Find node index
+    int Index(CDNode<cType> *pNode);
+    // Find element index
     int FindIndex(cType pObject);
-    const int FindIndex(cType pObject) const;
 };
 
-#include "DataList.inl"
+// Go through every node in the list
+#define FOREACH_CDNode(_List, _Type, _Node) \
+  for (CDNode<_Type> *_Node = _List.dl_dnHead; \
+       _Node != NULL; \
+       _Node = _Node->dn_pNext)
+
+#include "DataLinkedList.inl"

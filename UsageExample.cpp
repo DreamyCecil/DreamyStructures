@@ -1,4 +1,4 @@
-/* Copyright (c) 2020 Dreamy Cecil
+/* Copyright (c) 2020-2021 Dreamy Cecil
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -155,6 +155,34 @@ int main() {
     }
     
     std::cout << "\n";
+  }
+
+  // Linked lists
+  {
+    CDLinked<int> lstNumbers;
+
+    for (int i = 1; i <= 10; i++)
+    {
+      int iNum = pow(2, i);
+      lstNumbers.Add(iNum);
+    }
+    
+    std::cout << "\n-- Linked list:\n";
+
+    // Remove two numbers from the same position
+    lstNumbers.Delete(2);
+    lstNumbers.Delete(2);
+
+    // Insert another number
+    lstNumbers.Insert(4, -128);
+
+    // Print every number in the list
+    int iNum = 0;
+
+    FOREACH_CDNode(lstNumbers, int, pPrint) {
+      std::cout << iNum << ". " << int(*pPrint) << "\n";
+      iNum++;
+    }
   }
   
   return 0;
