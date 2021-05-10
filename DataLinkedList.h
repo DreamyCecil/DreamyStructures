@@ -78,10 +78,18 @@ DS_TEMP class CDLinked {
     int FindIndex(cType pObject);
 };
 
-// Go through every node in the list
-#define FOREACH_CDNode(_List, _Type, _Node) \
-  for (CDNode<_Type> *_Node = _List.dl_dnHead; \
-       _Node != NULL; \
-       _Node = _Node->dn_pNext)
+// Go through every node in the list (forward: Head to Tail)
+#define CDLinked_H2T(_List, _Type, _Value) \
+  CDNode<_Type> *__pNodeIter_##_Type##_Value = _List.dl_dnHead; \
+  for (_Type _Value = _Type(); \
+       (__pNodeIter_##_Type##_Value != NULL) && ((_Value = *__pNodeIter_##_Type##_Value) || true); \
+       __pNodeIter_##_Type##_Value = __pNodeIter_##_Type##_Value->dn_pNext)
+
+// Go through every node in the list (backwards: Tail to Head)
+#define CDLinked_T2H(_List, _Type, _Value) \
+  CDNode<_Type> *__pNodeIter_##_Type##_Value = _List.dl_dnTail; \
+  for (_Type _Value = _Type(); \
+       (__pNodeIter_##_Type##_Value != NULL) && ((_Value = *__pNodeIter_##_Type##_Value) || true); \
+       __pNodeIter_##_Type##_Value = __pNodeIter_##_Type##_Value->dn_pPrev)
 
 #include "DataLinkedList.inl"

@@ -176,12 +176,16 @@ int main() {
     // Insert another number
     lstNumbers.Insert(4, -128);
 
-    // Print every number in the list
-    int iNum = 0;
+    // Print the first and the last numbers
+    std::cout << "First: " << int(*lstNumbers.dl_dnHead) << "\n";
+    std::cout << "Last:  " << int(*lstNumbers.dl_dnTail) << "\n\n";
 
-    FOREACH_CDNode(lstNumbers, int, pPrint) {
-      std::cout << iNum << ". " << int(*pPrint) << "\n";
-      iNum++;
+    // Print every number in the list from the end
+    int iNum = lstNumbers.Count() - 1;
+
+    CDLinked_T2H(lstNumbers, int, iPrint) {
+      std::cout << iNum << ". " << iPrint << "\n";
+      iNum--;
     }
   }
   
