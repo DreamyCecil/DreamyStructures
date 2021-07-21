@@ -30,6 +30,3 @@ SOFTWARE. */
 #include "DataList.h"
 #include "DataStack.h"
 #include "DataMap.h"
-
-// Data structure classes
-#include "DataLinkedList.h"
