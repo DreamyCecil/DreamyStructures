@@ -53,15 +53,15 @@ MAP_TEMP class DSMap : public DSArray<cType> {
     inline cType &operator[](cKey mapKey);
     inline const cType &operator[](cKey mapKey) const;
     // Value access via the index
-    inline cType &GetValue(int iValue);
-    inline const cType &GetValue(int iValue) const;
+    inline cType &GetValue(const int &iValue);
+    inline const cType &GetValue(const int &iValue) const;
   
     // Copy elements from the other map
     void CopyMap(const DSMap<cKey, cType> &mapOther);
     // Move elements from one map to this one
     void MoveMap(DSMap<cKey, cType> &mapOther);
     // Add elements from the other map and replace values of existing ones if needed
-    void AddFrom(DSMap<cKey, cType> &mapOther, bool bReplace = false);
+    void AddFrom(DSMap<cKey, cType> &mapOther, const bool &bReplace = false);
 
     // Assignment
     DSMap<cKey, cType> &operator=(const DSMap<cKey, cType> &mapOther);

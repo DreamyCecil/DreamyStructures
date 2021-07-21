@@ -40,7 +40,7 @@ DS_TEMP void DSArray<cType>::Reset(void) {
 };
 
 // New array
-DS_TEMP void DSArray<cType>::New(int iCount) {
+DS_TEMP void DSArray<cType>::New(const int &iCount) {
   // Too small
   if (iCount <= 0) {
     return;
@@ -51,7 +51,7 @@ DS_TEMP void DSArray<cType>::New(int iCount) {
 };
 
 // Resize the array
-DS_TEMP void DSArray<cType>::Resize(int iNewCount) {
+DS_TEMP void DSArray<cType>::Resize(const int &iNewCount) {
   // Clear the array
   if (iNewCount <= 0) {
     Clear();
@@ -93,11 +93,11 @@ DS_TEMP void DSArray<cType>::Clear(void) {
 };
 
 // Get the element
-DS_TEMP cType &DSArray<cType>::operator[](int iObject) {
+DS_TEMP cType &DSArray<cType>::operator[](const int &iObject) {
   return da_aArray[iObject];
 };
 
-DS_TEMP const cType &DSArray<cType>::operator[](int iObject) const {
+DS_TEMP const cType &DSArray<cType>::operator[](const int &iObject) const {
   return da_aArray[iObject];
 };
 
@@ -106,15 +106,12 @@ DS_TEMP const cType &DSArray<cType>::operator[](int iObject) const {
 // --- FUNCTIONS ---
 
 // Count elements
-DS_TEMP int DSArray<cType>::Count(void) {
-  return da_ctSize;
-};
-DS_TEMP const int DSArray<cType>::Count(void) const {
+DS_TEMP int DSArray<cType>::Count(void) const {
   return da_ctSize;
 };
 
 // Element index in the array
-DS_TEMP int DSArray<cType>::Index(cType *pObject) {
+DS_TEMP int DSArray<cType>::Index(cType *pObject) const {
   return pObject - da_aArray;
 };
 

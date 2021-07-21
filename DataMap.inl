@@ -110,11 +110,11 @@ MAP_TEMP const cType &DSMap<cKey, cType>::operator[](cKey mapKey) const {
   return this->da_aArray[iKey];
 };
 
-MAP_TEMP cType &DSMap<cKey, cType>::GetValue(int iValue) {
+MAP_TEMP cType &DSMap<cKey, cType>::GetValue(const int &iValue) {
   return this->da_aArray[iValue];
 };
 
-MAP_TEMP const cType &DSMap<cKey, cType>::GetValue(int iValue) const {
+MAP_TEMP const cType &DSMap<cKey, cType>::GetValue(const int &iValue) const {
   return this->da_aArray[iValue];
 };
 
@@ -135,7 +135,7 @@ MAP_TEMP void DSMap<cKey, cType>::MoveMap(DSMap<cKey, cType> &mapOther) {
 };
 
 // Add elements from the other map
-MAP_TEMP void DSMap<cKey, cType>::AddFrom(DSMap<cKey, cType> &mapOther, bool bReplace) {
+MAP_TEMP void DSMap<cKey, cType>::AddFrom(DSMap<cKey, cType> &mapOther, const bool &bReplace) {
   int ctAdd = mapOther.Count();
 
   // for each element

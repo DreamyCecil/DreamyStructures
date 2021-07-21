@@ -37,21 +37,21 @@ DS_TEMP class DSArray {
     // Reset the array
     inline void Reset(void);
     // New array
-    inline void New(int iCount);
+    inline void New(const int &iCount);
     // Resize the array
-    inline void Resize(int iNewCount);
+    inline void Resize(const int &iNewCount);
     // Clear the array
     inline void Clear(void);
 
     // Get the element
-    inline cType &operator[](int iObject);
-    inline const cType &operator[](int iObject) const;
+    inline cType &operator[](const int &iObject);
+    inline const cType &operator[](const int &iObject) const;
 
     // Count elements
-    int Count(void);
-    const int Count(void) const;
+    int Count(void) const;
+
     // Element index in the array
-    int Index(cType *pObject);
+    int Index(cType *pObject) const;
 
     // Copy elements from the other array
     void CopyArray(const DSArray<cType> &aOriginal);
