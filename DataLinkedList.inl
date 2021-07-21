@@ -21,7 +21,7 @@ SOFTWARE. */
 // --- INLINE ---
 
 // Default constructor
-inline CDLinkNode::CDLinkNode(void *pOwner) {
+inline DSLinkNode::DSLinkNode(void *pOwner) {
   // make a non-linked node
   ln_Succ = NULL;
   ln_Pred = NULL;
@@ -29,7 +29,7 @@ inline CDLinkNode::CDLinkNode(void *pOwner) {
 };
 
 // Destructor
-inline CDLinkNode::~CDLinkNode(void) {
+inline DSLinkNode::~DSLinkNode(void) {
   // if node is linked
   if (IsLinked()) {
     // remove it from list
@@ -38,17 +38,17 @@ inline CDLinkNode::~CDLinkNode(void) {
 };
 
 // Get predeccessor of this node
-inline CDLinkNode &CDLinkNode::Pred(void) const {
+inline DSLinkNode &DSLinkNode::Pred(void) const {
   return *ln_Pred;
 };
 
 // Get successor of this node
-inline CDLinkNode &CDLinkNode::Succ(void) const {
+inline DSLinkNode &DSLinkNode::Succ(void) const {
   return *ln_Succ;
 };
 
 // Check that this list node is head marker of list
-inline bool CDLinkNode::IsHeadMarker(void) const {
+inline bool DSLinkNode::IsHeadMarker(void) const {
   // if this is in fact pointer to list.lh_Head
   if (ln_Pred == NULL) {
     // it is end marker
@@ -60,7 +60,7 @@ inline bool CDLinkNode::IsHeadMarker(void) const {
 };
 
 // Check that this list node is tail marker of list
-inline bool CDLinkNode::IsTailMarker(void) const {
+inline bool DSLinkNode::IsTailMarker(void) const {
   // if this is in fact pointer to list.lh_NULL
   if (ln_Succ == NULL) {
     // it is end marker
@@ -72,24 +72,24 @@ inline bool CDLinkNode::IsTailMarker(void) const {
 };
 
 // Check if this list node is head of list
-inline bool CDLinkNode::IsHead(void) const {
+inline bool DSLinkNode::IsHead(void) const {
   // if previous is list.lh_NULL
   return ln_Pred->ln_Pred == NULL;
 };
 
 // Check that this list node is tail of list
-inline bool CDLinkNode::IsTail(void) const {
+inline bool DSLinkNode::IsTail(void) const {
   // if next is list.lh_NULL
   return ln_Succ->ln_Succ == NULL;
 };
 
 // Get list head
-inline CDLinkNode &CDLinkHead::Head(void) const {
+inline DSLinkNode &DSLinkHead::Head(void) const {
   return *lh_Head;
 };
 
 // Get list tail
-inline CDLinkNode &CDLinkHead::Tail(void) const {
+inline DSLinkNode &DSLinkHead::Tail(void) const {
   return *lh_Tail;
 };
 
@@ -97,14 +97,14 @@ inline CDLinkNode &CDLinkHead::Tail(void) const {
 // --- FUNCTIONS ---
 
 // Check is linked in some list
-bool CDLinkNode::IsLinked(void) const {
+bool DSLinkNode::IsLinked(void) const {
   return ln_Pred != NULL;
 };
 
 // Remove a node from list
-void CDLinkNode::Remove(void) {
-  CDLinkNode &lnPrev = *ln_Pred;
-  CDLinkNode &lnNext = *ln_Succ;
+void DSLinkNode::Remove(void) {
+  DSLinkNode &lnPrev = *ln_Pred;
+  DSLinkNode &lnNext = *ln_Succ;
 
   lnNext.ln_Pred = &lnPrev;
   lnPrev.ln_Succ = &lnNext;
@@ -115,9 +115,9 @@ void CDLinkNode::Remove(void) {
 };
 
 // Add a node after this node
-void CDLinkNode::AddAfter(CDLinkNode &lnToAdd) {
-  CDLinkNode &lnPred = *this;
-  CDLinkNode &lnSucc = Succ();
+void DSLinkNode::AddAfter(DSLinkNode &lnToAdd) {
+  DSLinkNode &lnPred = *this;
+  DSLinkNode &lnSucc = Succ();
 
   lnSucc.ln_Pred = &lnToAdd;
   lnPred.ln_Succ = &lnToAdd;
@@ -126,9 +126,9 @@ void CDLinkNode::AddAfter(CDLinkNode &lnToAdd) {
 };
 
 // Add a node before this node
-void CDLinkNode::AddBefore(CDLinkNode &lnToAdd) {
-  CDLinkNode &lnPred = Pred();
-  CDLinkNode &lnSucc = *this;
+void DSLinkNode::AddBefore(DSLinkNode &lnToAdd) {
+  DSLinkNode &lnPred = Pred();
+  DSLinkNode &lnSucc = *this;
 
   lnSucc.ln_Pred = &lnToAdd;
   lnPred.ln_Succ = &lnToAdd;
@@ -137,9 +137,9 @@ void CDLinkNode::AddBefore(CDLinkNode &lnToAdd) {
 };
 
 // Find the head of the list that this node is in
-CDLinkHead &CDLinkNode::GetHead(void) {
+DSLinkHead &DSLinkNode::GetHead(void) {
   // start at this node
-  CDLinkNode *pln = this;
+  DSLinkNode *pln = this;
 
   // while current node is not pointer to list.lh_Head
   while (pln->ln_Pred != NULL) {
@@ -148,29 +148,29 @@ CDLinkHead &CDLinkNode::GetHead(void) {
   }
 
   // return the head pointer
-  return *(CDLinkHead*)pln;
+  return *(DSLinkHead*)pln;
 };
 
 // Initialize a list head
-void CDLinkHead::Clear(void) {
+void DSLinkHead::Clear(void) {
   lh_Head = NULL;
   lh_Tail = NULL;
 };
 
 // Check if list is empty
-bool CDLinkHead::IsEmpty(void) const {
+bool DSLinkHead::IsEmpty(void) const {
   return (lh_Head == NULL);
 };
 
 // Add a node to head of list
-void CDLinkHead::AddHead(CDLinkNode &lnElement) {
+void DSLinkHead::AddHead(DSLinkNode &lnElement) {
   if (IsEmpty()) {
     lh_Head = &lnElement;
     lh_Tail = &lnElement;
     return;
   }
 
-  CDLinkNode &lnFirst = *lh_Head;
+  DSLinkNode &lnFirst = *lh_Head;
 
   lh_Head = &lnElement;
   lnElement.ln_Succ = &lnFirst;
@@ -179,14 +179,14 @@ void CDLinkHead::AddHead(CDLinkNode &lnElement) {
 };
 
 // Add a node to tail of list
-void CDLinkHead::AddTail(CDLinkNode &lnElement) {
+void DSLinkHead::AddTail(DSLinkNode &lnElement) {
   if (IsEmpty()) {
     lh_Head = &lnElement;
     lh_Tail = &lnElement;
     return;
   }
 
-  CDLinkNode &lnLast = *lh_Tail;
+  DSLinkNode &lnLast = *lh_Tail;
 
   lh_Tail = &lnElement;
   lnElement.ln_Succ = lnLast.ln_Succ;
@@ -195,37 +195,37 @@ void CDLinkHead::AddTail(CDLinkNode &lnElement) {
 };
 
 // Remove a node from head of list
-void CDLinkHead::RemHead(void) {
+void DSLinkHead::RemHead(void) {
   lh_Head->Remove();
 };
 
 // Remove a node from tail of list
-void CDLinkHead::RemTail(void) {
+void DSLinkHead::RemTail(void) {
   lh_Tail->Remove();
 };
 
 // Remove all elements from list
-void CDLinkHead::RemAll(void) {
+void DSLinkHead::RemAll(void) {
   // keep removing from the head
-  for (CDLinkNode *ln = lh_Head; lh_Head != NULL; ln = lh_Head) {
+  for (DSLinkNode *ln = lh_Head; lh_Head != NULL; ln = lh_Head) {
     ln->Remove();
   }
 };
 
 // Move all elements of another list into this one
-void CDLinkHead::MoveList(CDLinkHead &lhOther) {
+void DSLinkHead::MoveList(DSLinkHead &lhOther) {
   // if the second list is empty then no moving
   if (lhOther.IsEmpty()) {
     return;
   }
 
   // get first element in other list
-  CDLinkNode &lnOtherFirst = *lhOther.lh_Head;
+  DSLinkNode &lnOtherFirst = *lhOther.lh_Head;
   // get last element in other list
-  CDLinkNode &lnOtherLast = *lhOther.lh_Tail;
+  DSLinkNode &lnOtherLast = *lhOther.lh_Tail;
 
   // get last element in this list
-  CDLinkNode &lnThisLast = *lh_Tail;
+  DSLinkNode &lnThisLast = *lh_Tail;
 
   // relink elements
   lnOtherLast.ln_Succ = lnThisLast.ln_Succ;
@@ -238,11 +238,11 @@ void CDLinkHead::MoveList(CDLinkHead &lhOther) {
 };
 
 // Return the number of elements in list
-int CDLinkHead::Count(void) const {
+int DSLinkHead::Count(void) const {
   int ctCount = 0;
 
-  // walk the list - modification of FOREACHINLIST that works with base CDLinkNode class
-  for (CDLinkNode *ln = lh_Head; !ln->IsTailMarker(); ln = ln->ln_Succ) {
+  // walk the list - modification of FOREACHINLIST that works with base DSLinkNode class
+  for (DSLinkNode *ln = lh_Head; !ln->IsTailMarker(); ln = ln->ln_Succ) {
     ctCount++;
   }
 

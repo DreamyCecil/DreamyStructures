@@ -21,7 +21,7 @@ SOFTWARE. */
 // --- INLINE ---
 
 // Add new element to the list
-DS_TEMP int CDList<cType>::Add(cType pObject) {
+DS_TEMP int DSList<cType>::Add(cType pObject) {
   int ctCount = this->da_ctSize;
   this->Resize(ctCount+1);
   this->da_aArray[ctCount] = pObject;
@@ -30,7 +30,7 @@ DS_TEMP int CDList<cType>::Add(cType pObject) {
 };
 
 // Insert new element somewhere in the list
-DS_TEMP void CDList<cType>::Insert(const int &iPos, cType pObject) {
+DS_TEMP void DSList<cType>::Insert(const int &iPos, cType pObject) {
   // Empty
   if (this->da_ctSize <= 0) {
     this->New(iPos+1);
@@ -55,7 +55,7 @@ DS_TEMP void CDList<cType>::Insert(const int &iPos, cType pObject) {
 };
 
 // Delete some element
-DS_TEMP void CDList<cType>::Delete(const int &iPos) {
+DS_TEMP void DSList<cType>::Delete(const int &iPos) {
   // Position doesn't exist
   if (iPos >= this->da_ctSize) {
     return;
@@ -92,11 +92,11 @@ DS_TEMP void CDList<cType>::Delete(const int &iPos) {
 // --- FUNCTIONS ---
 
 // Find index of a specific element
-DS_TEMP int CDList<cType>::FindIndex(cType pObject) {
-  return ((const CDList<cType>*)this)->FindIndex(pObject);
+DS_TEMP int DSList<cType>::FindIndex(cType pObject) {
+  return ((const DSList<cType>*)this)->FindIndex(pObject);
 };
 
-DS_TEMP const int CDList<cType>::FindIndex(cType pObject) const {
+DS_TEMP const int DSList<cType>::FindIndex(cType pObject) const {
   const int ctObjects = this->Count();
 
   for (int i = 0; i < ctObjects; i++) {

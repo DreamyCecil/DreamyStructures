@@ -23,7 +23,7 @@ SOFTWARE. */
 #include "DataList.h"
 
 // Data stack
-DS_TEMP class CDStack : public CDList<cType> {
+DS_TEMP class DSStack : public DSList<cType> {
   public:
     // Add new element to the end of the stack
     inline int Push(cType pObject);

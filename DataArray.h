@@ -23,16 +23,16 @@ SOFTWARE. */
 #include "DataTemplates.h"
 
 // Data array
-DS_TEMP class CDArray {
+DS_TEMP class DSArray {
   protected:
     int da_ctSize;
     cType *da_aArray;
 
   public:
     // Constructors & Destructor
-    inline CDArray(void);
-    inline CDArray(const CDArray<cType> &aOriginal);
-    inline ~CDArray(void);
+    inline DSArray(void);
+    inline DSArray(const DSArray<cType> &aOriginal);
+    inline ~DSArray(void);
 
     // Reset the array
     inline void Reset(void);
@@ -54,12 +54,12 @@ DS_TEMP class CDArray {
     int Index(cType *pObject);
 
     // Copy elements from the other array
-    void CopyArray(const CDArray<cType> &aOriginal);
+    void CopyArray(const DSArray<cType> &aOriginal);
     // Move elements from one array to this one
-    void MoveArray(CDArray<cType> &aOther);
+    void MoveArray(DSArray<cType> &aOther);
 
     // Assignment
-    CDArray<cType> &operator=(const CDArray<cType> &aOther);
+    DSArray<cType> &operator=(const DSArray<cType> &aOther);
 };
 
 #include "DataArray.inl"

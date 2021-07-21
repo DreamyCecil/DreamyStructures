@@ -23,27 +23,27 @@ SOFTWARE. */
 #include "DataTemplates.h"
 
 // List node
-class DSTRUCT_API CDLinkNode {
+class DSTRUCT_API DSLinkNode {
   public:
-    CDLinkNode *ln_Pred; // previous node (predecessor)
-    CDLinkNode *ln_Succ; // next node (successor)
+    DSLinkNode *ln_Pred; // previous node (predecessor)
+    DSLinkNode *ln_Succ; // next node (successor)
 
     void *ln_pOwner; // class that owns this node
 
   public:
     // Default constructor
-    inline CDLinkNode(void *pOwner);
+    inline DSLinkNode(void *pOwner);
 
     // Destructor
-    inline ~CDLinkNode(void);
+    inline ~DSLinkNode(void);
 
     // Check that this list node is linked in some list
     bool IsLinked(void) const;
 
     // Add a node after this node
-    void AddAfter(CDLinkNode &node);
+    void AddAfter(DSLinkNode &node);
     // Add a node before this node
-    void AddBefore(CDLinkNode &node);
+    void AddBefore(DSLinkNode &node);
 
     // Remove this node from list
     void Remove(void);
@@ -59,42 +59,42 @@ class DSTRUCT_API CDLinkNode {
     inline bool IsTail(void) const;
 
     // Get predeccessor of this node
-    inline CDLinkNode &Pred(void) const;
+    inline DSLinkNode &Pred(void) const;
     // Get successor of this node
-    inline CDLinkNode &Succ(void) const;
+    inline DSLinkNode &Succ(void) const;
 
     // Find the head of the list that this node is in
-    class CDLinkHead &GetHead(void);
+    class DSLinkHead &GetHead(void);
 };
 
 // List head
-class DSTRUCT_API CDLinkHead {
+class DSTRUCT_API DSLinkHead {
   public:
-    CDLinkNode *lh_Head; // first node (head)
-    CDLinkNode *lh_Tail; // last node (tail)
+    DSLinkNode *lh_Head; // first node (head)
+    DSLinkNode *lh_Tail; // last node (tail)
 
   public:
     // Default constructor
-    inline CDLinkHead() { Clear(); };
+    inline DSLinkHead() { Clear(); };
 
     // Copy constructor
-    inline CDLinkHead(const CDLinkHead &lh) {};
+    inline DSLinkHead(const DSLinkHead &lh) {};
 
     // Assignment
-    inline void operator=(const CDLinkHead &lh) {};
+    inline void operator=(const DSLinkHead &lh) {};
 
     // Clear the list head
     void Clear();
 
     // Get list head
-    inline CDLinkNode &Head(void) const;
+    inline DSLinkNode &Head(void) const;
     // Get list tail
-    inline CDLinkNode &Tail(void) const;
+    inline DSLinkNode &Tail(void) const;
 
     // Add a new element to head of list
-    void AddHead(CDLinkNode &lnNode);
+    void AddHead(DSLinkNode &lnNode);
     // Add a new element to tail of list
-    void AddTail(CDLinkNode &lnNode);
+    void AddTail(DSLinkNode &lnNode);
 
     // Remove first element from list
     void RemHead(void);
@@ -107,7 +107,7 @@ class DSTRUCT_API CDLinkHead {
     bool IsEmpty(void) const;
 
     // Move all elements of another list into this one
-    void MoveList(CDLinkHead &lhOther);
+    void MoveList(DSLinkHead &lhOther);
 
     // Return the number of elements in list
     int Count(void) const;
@@ -117,8 +117,8 @@ class DSTRUCT_API CDLinkHead {
 
 // Linked list iteration (from head to tail)
 #define LINKEDLIST_H2T(_Head, _Iterator) \
-  for (CDLinkNode *_Iterator = _Head.lh_Head; _Iterator != NULL; _Iterator = _Iterator->ln_Succ)
+  for (DSLinkNode *_Iterator = _Head.lh_Head; _Iterator != NULL; _Iterator = _Iterator->ln_Succ)
 
 // Linked list iteration (from tail to head)
 #define LINKEDLIST_T2H(_Head, _Iterator) \
-  for (CDLinkNode *_Iterator = _Head.lh_Tail; _Iterator != NULL; _Iterator = _Iterator->ln_Pred)
+  for (DSLinkNode *_Iterator = _Head.lh_Tail; _Iterator != NULL; _Iterator = _Iterator->ln_Pred)

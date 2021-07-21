@@ -21,13 +21,13 @@ SOFTWARE. */
 // --- INLINE ---
 
 // Clear the map
-MAP_TEMP void CDMap<cKey, cType>::Clear(void) {
-  CDArray<cType>::Clear();
+MAP_TEMP void DSMap<cKey, cType>::Clear(void) {
+  DSArray<cType>::Clear();
   map_aKeys.Clear();
 };
 
 // Add new key
-MAP_TEMP int CDMap<cKey, cType>::Add(cKey mapKey) {
+MAP_TEMP int DSMap<cKey, cType>::Add(cKey mapKey) {
   int iNewKey = map_aKeys.Add(mapKey);
   this->Resize(iNewKey+1);
 
@@ -35,7 +35,7 @@ MAP_TEMP int CDMap<cKey, cType>::Add(cKey mapKey) {
 };
 
 // Add new key and assign a value to it
-MAP_TEMP int CDMap<cKey, cType>::Add(cKey mapKey, cType pObject) {
+MAP_TEMP int DSMap<cKey, cType>::Add(cKey mapKey, cType pObject) {
   int iNewKey = this->Add(mapKey);
   this->da_aArray[iNewKey] = pObject;
 
@@ -43,7 +43,7 @@ MAP_TEMP int CDMap<cKey, cType>::Add(cKey mapKey, cType pObject) {
 };
 
 // Delete value under some key
-MAP_TEMP void CDMap<cKey, cType>::Delete(cKey mapKey) {
+MAP_TEMP void DSMap<cKey, cType>::Delete(cKey mapKey) {
   int iKey = FindKeyIndex(mapKey);
 
   // Key doesn't exist
@@ -81,21 +81,21 @@ MAP_TEMP void CDMap<cKey, cType>::Delete(cKey mapKey) {
 };
 
 // Find index of a specific key
-MAP_TEMP int CDMap<cKey, cType>::FindKeyIndex(cKey mapKey) {
-  return ((const CDMap<cKey, cType>*)this)->FindKeyIndex(mapKey);
+MAP_TEMP int DSMap<cKey, cType>::FindKeyIndex(cKey mapKey) {
+  return ((const DSMap<cKey, cType>*)this)->FindKeyIndex(mapKey);
 };
 
-MAP_TEMP const int CDMap<cKey, cType>::FindKeyIndex(cKey mapKey) const {
+MAP_TEMP const int DSMap<cKey, cType>::FindKeyIndex(cKey mapKey) const {
   return map_aKeys.FindIndex(mapKey);
 };
 
 // Get the key under some index
-MAP_TEMP cKey &CDMap<cKey, cType>::GetKey(int iValue) {
+MAP_TEMP cKey &DSMap<cKey, cType>::GetKey(int iValue) {
   return map_aKeys[iValue];
 };
 
 // Value access via the key
-MAP_TEMP cType &CDMap<cKey, cType>::operator[](cKey mapKey) {
+MAP_TEMP cType &DSMap<cKey, cType>::operator[](cKey mapKey) {
   int iKey = FindKeyIndex(mapKey);
 
   // Add a new key
@@ -105,16 +105,16 @@ MAP_TEMP cType &CDMap<cKey, cType>::operator[](cKey mapKey) {
   return this->da_aArray[iKey];
 };
 
-MAP_TEMP const cType &CDMap<cKey, cType>::operator[](cKey mapKey) const {
+MAP_TEMP const cType &DSMap<cKey, cType>::operator[](cKey mapKey) const {
   int iKey = FindKeyIndex(mapKey);
   return this->da_aArray[iKey];
 };
 
-MAP_TEMP cType &CDMap<cKey, cType>::GetValue(int iValue) {
+MAP_TEMP cType &DSMap<cKey, cType>::GetValue(int iValue) {
   return this->da_aArray[iValue];
 };
 
-MAP_TEMP const cType &CDMap<cKey, cType>::GetValue(int iValue) const {
+MAP_TEMP const cType &DSMap<cKey, cType>::GetValue(int iValue) const {
   return this->da_aArray[iValue];
 };
 
@@ -123,19 +123,19 @@ MAP_TEMP const cType &CDMap<cKey, cType>::GetValue(int iValue) const {
 // --- FUNCTIONS ---
   
 // Copy elements from the other map
-MAP_TEMP void CDMap<cKey, cType>::CopyMap(const CDMap<cKey, cType> &mapOther) {
+MAP_TEMP void DSMap<cKey, cType>::CopyMap(const DSMap<cKey, cType> &mapOther) {
   map_aKeys.CopyArray(mapOther.map_aKeys);
   this->CopyArray(mapOther);
 };
 
 // Move elements from one map to this one
-MAP_TEMP void CDMap<cKey, cType>::MoveMap(CDMap<cKey, cType> &mapOther) {
+MAP_TEMP void DSMap<cKey, cType>::MoveMap(DSMap<cKey, cType> &mapOther) {
   map_aKeys.MoveArray(mapOther.map_aKeys);
   this->MoveArray(mapOther);
 };
 
 // Add elements from the other map
-MAP_TEMP void CDMap<cKey, cType>::AddFrom(CDMap<cKey, cType> &mapOther, bool bReplace) {
+MAP_TEMP void DSMap<cKey, cType>::AddFrom(DSMap<cKey, cType> &mapOther, bool bReplace) {
   int ctAdd = mapOther.Count();
 
   // for each element
@@ -160,7 +160,7 @@ MAP_TEMP void CDMap<cKey, cType>::AddFrom(CDMap<cKey, cType> &mapOther, bool bRe
 };
 
 // Assignment
-MAP_TEMP CDMap<cKey, cType> &CDMap<cKey, cType>::operator=(const CDMap<cKey, cType> &mapOther) {
+MAP_TEMP DSMap<cKey, cType> &DSMap<cKey, cType>::operator=(const DSMap<cKey, cType> &mapOther) {
   if (this == &mapOther) {
     return *this;
   }

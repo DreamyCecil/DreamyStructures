@@ -21,12 +21,12 @@ SOFTWARE. */
 // --- INLINE ---
 
 // Add new element to the end of the stack
-DS_TEMP int CDStack<cType>::Push(cType pObject) {
+DS_TEMP int DSStack<cType>::Push(cType pObject) {
   return this->Add(pObject);
 };
 
 // Get the top element from the stack
-DS_TEMP cType &CDStack<cType>::Top(void) {
+DS_TEMP cType &DSStack<cType>::Top(void) {
   // get the last element
   int iPos = this->Count()-1;
 
@@ -34,7 +34,7 @@ DS_TEMP cType &CDStack<cType>::Top(void) {
 };
 
 // Remove one element from the end of the stack
-DS_TEMP cType CDStack<cType>::Pop(void) {
+DS_TEMP cType DSStack<cType>::Pop(void) {
   // get the last element
   int iPos = this->Count()-1;
   cType pValue = this->da_aArray[iPos];
@@ -50,7 +50,7 @@ DS_TEMP cType CDStack<cType>::Pop(void) {
 // --- FUNCTIONS ---
 
 // Remove elements from the end of the stack until a certain element
-DS_TEMP int CDStack<cType>::PopUntil(cType pUntil) {
+DS_TEMP int DSStack<cType>::PopUntil(cType pUntil) {
   int ctRemoved = 0;
   
   // get the last element

@@ -25,8 +25,10 @@ SOFTWARE. */
 // Structures
 #define DSTRUCT_EXPORT
 #include "DataStructures.h"
+
 // Output
 #include <iostream>
+
 // Strings
 #include <string>
 
@@ -43,12 +45,12 @@ static const int _aiAges[5] = {
 };
 
 // Custom types
-typedef CDMap<string, int> CAgeMap;
+typedef DSMap<string, int> CAgeMap;
 
 // Integer in the linked list
 class CLinkedInt {
   public:
-    CDLinkNode ln;
+    DSLinkNode ln;
     int iNumber;
 
     // Constructor
@@ -63,7 +65,7 @@ int main() {
   // Arrays
   {
     // Array of numbers
-    CDArray<int> aiArray;
+    DSArray<int> aiArray;
     aiArray.New(2);
     
     aiArray[0] = 1;
@@ -86,7 +88,7 @@ int main() {
   // Lists
   {
     // List of pointers
-    CDList<string *> astrNames;
+    DSList<string *> astrNames;
     
     std::cout << "\n-- List:\n";
     
@@ -146,7 +148,7 @@ int main() {
   
   // Stacks
   {
-    CDStack<short> aStack;
+    DSStack<short> aStack;
     
     for (int i = 0; i < 10; i++)
     {
@@ -174,7 +176,7 @@ int main() {
 
   // Linked lists
   {
-    CDLinkHead lstNumbers;
+    DSLinkHead lstNumbers;
 
     CLinkedInt *lnkToRemove1 = NULL;
     CLinkedInt *lnkToRemove2 = NULL;

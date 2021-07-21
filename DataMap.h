@@ -23,13 +23,13 @@ SOFTWARE. */
 #include "DataList.h"
 
 // Data map
-MAP_TEMP class CDMap : public CDArray<cType> {
+MAP_TEMP class DSMap : public DSArray<cType> {
   private:
-    CDList<cKey> map_aKeys;
+    DSList<cKey> map_aKeys;
 
   public:
     // Destructor
-    ~CDMap(void) {
+    ~DSMap(void) {
       Clear();
     };
   
@@ -57,14 +57,14 @@ MAP_TEMP class CDMap : public CDArray<cType> {
     inline const cType &GetValue(int iValue) const;
   
     // Copy elements from the other map
-    void CopyMap(const CDMap<cKey, cType> &mapOther);
+    void CopyMap(const DSMap<cKey, cType> &mapOther);
     // Move elements from one map to this one
-    void MoveMap(CDMap<cKey, cType> &mapOther);
+    void MoveMap(DSMap<cKey, cType> &mapOther);
     // Add elements from the other map and replace values of existing ones if needed
-    void AddFrom(CDMap<cKey, cType> &mapOther, bool bReplace = false);
+    void AddFrom(DSMap<cKey, cType> &mapOther, bool bReplace = false);
 
     // Assignment
-    CDMap<cKey, cType> &operator=(const CDMap<cKey, cType> &mapOther);
+    DSMap<cKey, cType> &operator=(const DSMap<cKey, cType> &mapOther);
 };
 
 #include "DataMap.inl"

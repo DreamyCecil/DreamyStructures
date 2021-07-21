@@ -23,7 +23,7 @@ SOFTWARE. */
 #include "DataArray.h"
 
 // Data list
-DS_TEMP class CDList : public CDArray<cType> {
+DS_TEMP class DSList : public DSArray<cType> {
   public:
     // Add new element to the list
     inline int Add(cType pObject);

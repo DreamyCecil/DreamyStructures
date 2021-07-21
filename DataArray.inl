@@ -21,26 +21,26 @@ SOFTWARE. */
 // --- INLINE ---
 
 // Constructors & Destructor
-DS_TEMP CDArray<cType>::CDArray(void) {
+DS_TEMP DSArray<cType>::DSArray(void) {
   Reset();
 };
-DS_TEMP CDArray<cType>::CDArray(const CDArray<cType> &aOriginal) {
+DS_TEMP DSArray<cType>::DSArray(const DSArray<cType> &aOriginal) {
   Reset();
   CopyArray(aOriginal);
 };
-DS_TEMP CDArray<cType>::~CDArray(void) {
+DS_TEMP DSArray<cType>::~DSArray(void) {
   Clear();
 };
 
 // Reset the array
-DS_TEMP void CDArray<cType>::Reset(void) {
+DS_TEMP void DSArray<cType>::Reset(void) {
   // Empty array
   da_aArray = NULL;
   da_ctSize = 0;
 };
 
 // New array
-DS_TEMP void CDArray<cType>::New(int iCount) {
+DS_TEMP void DSArray<cType>::New(int iCount) {
   // Too small
   if (iCount <= 0) {
     return;
@@ -51,7 +51,7 @@ DS_TEMP void CDArray<cType>::New(int iCount) {
 };
 
 // Resize the array
-DS_TEMP void CDArray<cType>::Resize(int iNewCount) {
+DS_TEMP void DSArray<cType>::Resize(int iNewCount) {
   // Clear the array
   if (iNewCount <= 0) {
     Clear();
@@ -84,7 +84,7 @@ DS_TEMP void CDArray<cType>::Resize(int iNewCount) {
 };
 
 // Clear the array
-DS_TEMP void CDArray<cType>::Clear(void) {
+DS_TEMP void DSArray<cType>::Clear(void) {
   // Destroy the array
   if (da_ctSize > 0) {
     delete[] da_aArray;
@@ -93,11 +93,11 @@ DS_TEMP void CDArray<cType>::Clear(void) {
 };
 
 // Get the element
-DS_TEMP cType &CDArray<cType>::operator[](int iObject) {
+DS_TEMP cType &DSArray<cType>::operator[](int iObject) {
   return da_aArray[iObject];
 };
 
-DS_TEMP const cType &CDArray<cType>::operator[](int iObject) const {
+DS_TEMP const cType &DSArray<cType>::operator[](int iObject) const {
   return da_aArray[iObject];
 };
 
@@ -106,20 +106,20 @@ DS_TEMP const cType &CDArray<cType>::operator[](int iObject) const {
 // --- FUNCTIONS ---
 
 // Count elements
-DS_TEMP int CDArray<cType>::Count(void) {
+DS_TEMP int DSArray<cType>::Count(void) {
   return da_ctSize;
 };
-DS_TEMP const int CDArray<cType>::Count(void) const {
+DS_TEMP const int DSArray<cType>::Count(void) const {
   return da_ctSize;
 };
 
 // Element index in the array
-DS_TEMP int CDArray<cType>::Index(cType *pObject) {
+DS_TEMP int DSArray<cType>::Index(cType *pObject) {
   return pObject - da_aArray;
 };
 
 // Copy elements from the other array
-DS_TEMP void CDArray<cType>::CopyArray(const CDArray<cType> &aOriginal) {
+DS_TEMP void DSArray<cType>::CopyArray(const DSArray<cType> &aOriginal) {
   // clear previous contents
   Clear();
 
@@ -139,7 +139,7 @@ DS_TEMP void CDArray<cType>::CopyArray(const CDArray<cType> &aOriginal) {
 };
 
 // Move elements from one array to this one
-DS_TEMP void CDArray<cType>::MoveArray(CDArray<cType> &aOther) {
+DS_TEMP void DSArray<cType>::MoveArray(DSArray<cType> &aOther) {
   // clear previous contents
   Clear();
 
@@ -155,7 +155,7 @@ DS_TEMP void CDArray<cType>::MoveArray(CDArray<cType> &aOther) {
 };
 
 // Assignment
-DS_TEMP CDArray<cType> &CDArray<cType>::operator=(const CDArray<cType> &aOther) {
+DS_TEMP DSArray<cType> &DSArray<cType>::operator=(const DSArray<cType> &aOther) {
   if (this == &aOther) {
     return *this;
   }
