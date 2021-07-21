@@ -20,7 +20,7 @@ SOFTWARE. */
 
 #pragma once
 
-#include "DataTemplates.h"
+class DSLinkHead;
 
 // List node
 class DSTRUCT_API DSLinkNode {
@@ -64,7 +64,7 @@ class DSTRUCT_API DSLinkNode {
     inline DSLinkNode &Succ(void) const;
 
     // Find the head of the list that this node is in
-    class DSLinkHead &GetHead(void);
+    DSLinkHead &GetHead(void);
 };
 
 // List head

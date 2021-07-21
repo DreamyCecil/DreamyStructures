@@ -148,7 +148,7 @@ DSLinkHead &DSLinkNode::GetHead(void) {
   }
 
   // return the head pointer
-  return *(DSLinkHead*)pln;
+  return *(DSLinkHead *)pln;
 };
 
 // Initialize a list head

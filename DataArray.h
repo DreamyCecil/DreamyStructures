@@ -20,8 +20,6 @@ SOFTWARE. */
 
 #pragma once
 
-#include "DataTemplates.h"
-
 // Data array
 DS_TEMP class DSArray {
   protected:
