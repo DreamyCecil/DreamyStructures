@@ -22,74 +22,103 @@ SOFTWARE. */
 
 #include "DataTemplates.h"
 
-DS_TEMP class CDLinked;
-
-// Data node
-DS_TEMP class CDNode {
+// List node
+class DSTRUCT_API CDLinkNode {
   public:
-    CDLinked<cType> *dn_pList; // list this node belongs to
+    CDLinkNode *ln_Pred; // previous node (predecessor)
+    CDLinkNode *ln_Succ; // next node (successor)
 
-    CDNode<cType> *dn_pPrev; // previous node
-    CDNode<cType> *dn_pNext; // next node
-
-    cType dn_Value; // value itself
+    void *ln_pOwner; // class that owns this node
 
   public:
-    // Constructors
-    inline CDNode(void);
-    inline CDNode(CDLinked<cType> *pList, cType *pValue);
+    // Default constructor
+    inline CDLinkNode(void *pOwner);
 
-    // Type casting
-    operator cType() {
-      return dn_Value;
-    };
+    // Destructor
+    inline ~CDLinkNode(void);
+
+    // Check that this list node is linked in some list
+    bool IsLinked(void) const;
+
+    // Add a node after this node
+    void AddAfter(CDLinkNode &node);
+    // Add a node before this node
+    void AddBefore(CDLinkNode &node);
+
+    // Remove this node from list
+    void Remove(void);
+
+    // Check if this list node is head marker of list
+    inline bool IsHeadMarker(void) const;
+    // Check if this list node is tail marker of list
+    inline bool IsTailMarker(void) const;
+
+    // Check if this list node is at the head of list
+    inline bool IsHead(void) const;
+    // Check if this list node is at the tail of list
+    inline bool IsTail(void) const;
+
+    // Get predeccessor of this node
+    inline CDLinkNode &Pred(void) const;
+    // Get successor of this node
+    inline CDLinkNode &Succ(void) const;
+
+    // Find the head of the list that this node is in
+    class CDLinkHead &GetHead(void);
 };
 
-// Linked data list
-DS_TEMP class CDLinked {
+// List head
+class DSTRUCT_API CDLinkHead {
   public:
-    CDNode<cType> *dl_dnHead; // head of the list
-    CDNode<cType> *dl_dnTail; // tail of the list
-    
+    CDLinkNode *lh_Head; // first node (head)
+    CDLinkNode *lh_Tail; // last node (tail)
+
   public:
-    // Constructor & Destructor
-    inline CDLinked(void);
-    inline ~CDLinked(void);
+    // Default constructor
+    inline CDLinkHead() { Clear(); };
 
-    // Clear the list
-    inline void Clear(void);
+    // Copy constructor
+    inline CDLinkHead(const CDLinkHead &lh) {};
 
-    // Add new element to the list
-    inline int Add(cType pObject);
-    // Insert new element somewhere in the list
-    inline void Insert(const int &iPos, cType pObject);
-    // Delete some element
-    inline void Delete(const int &iPos);
+    // Assignment
+    inline void operator=(const CDLinkHead &lh) {};
 
-    // Get the node
-    inline CDNode<cType> &operator[](int iObject);
-    inline const CDNode<cType> &operator[](int iObject) const;
+    // Clear the list head
+    void Clear();
 
-    // Count nodes
+    // Get list head
+    inline CDLinkNode &Head(void) const;
+    // Get list tail
+    inline CDLinkNode &Tail(void) const;
+
+    // Add a new element to head of list
+    void AddHead(CDLinkNode &lnNode);
+    // Add a new element to tail of list
+    void AddTail(CDLinkNode &lnNode);
+
+    // Remove first element from list
+    void RemHead(void);
+    // Remove last element from list
+    void RemTail(void);
+    // Remove all elements from list
+    void RemAll(void);
+
+    // Check if list is empty
+    bool IsEmpty(void) const;
+
+    // Move all elements of another list into this one
+    void MoveList(CDLinkHead &lhOther);
+
+    // Return the number of elements in list
     int Count(void) const;
-    // Find node index
-    int Index(CDNode<cType> *pNode);
-    // Find element index
-    int FindIndex(cType pObject);
 };
-
-// Go through every node in the list (forward: Head to Tail)
-#define CDLinked_H2T(_List, _Type, _Value) \
-  CDNode<_Type> *__pNodeIter_##_Type##_Value = _List.dl_dnHead; \
-  for (_Type _Value = _Type(); \
-       (__pNodeIter_##_Type##_Value != NULL) && ((_Value = *__pNodeIter_##_Type##_Value) || true); \
-       __pNodeIter_##_Type##_Value = __pNodeIter_##_Type##_Value->dn_pNext)
-
-// Go through every node in the list (backwards: Tail to Head)
-#define CDLinked_T2H(_List, _Type, _Value) \
-  CDNode<_Type> *__pNodeIter_##_Type##_Value = _List.dl_dnTail; \
-  for (_Type _Value = _Type(); \
-       (__pNodeIter_##_Type##_Value != NULL) && ((_Value = *__pNodeIter_##_Type##_Value) || true); \
-       __pNodeIter_##_Type##_Value = __pNodeIter_##_Type##_Value->dn_pPrev)
 
 #include "DataLinkedList.inl"
+
+// Linked list iteration (from head to tail)
+#define LINKEDLIST_H2T(_Head, _Iterator) \
+  for (CDLinkNode *_Iterator = _Head.lh_Head; _Iterator != NULL; _Iterator = _Iterator->ln_Succ)
+
+// Linked list iteration (from tail to head)
+#define LINKEDLIST_T2H(_Head, _Iterator) \
+  for (CDLinkNode *_Iterator = _Head.lh_Tail; _Iterator != NULL; _Iterator = _Iterator->ln_Pred)

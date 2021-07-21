@@ -22,3 +22,16 @@ SOFTWARE. */
 
 #define DS_TEMP template<class cType>
 #define MAP_TEMP template<class cKey, class cType>
+
+// Importing/exporting for Visual Studio
+#ifdef _MSC_VER
+  #ifdef DSTRUCT_EXPORT
+    #define DSTRUCT_API _declspec(dllexport)
+  #else
+    #define DSTRUCT_API _declspec(dllimport)
+  #endif
+#endif
+
+#ifdef PLATFORM_UNIX
+  #define DSTRUCT_API
+#endif

@@ -20,239 +20,231 @@ SOFTWARE. */
 
 // --- INLINE ---
 
-// Constructors
-DS_TEMP CDNode<cType>::CDNode(void) {
-  dn_pList = NULL;
-  dn_pPrev = NULL;
-  dn_pNext = NULL;
-};
-DS_TEMP CDNode<cType>::CDNode(CDLinked<cType> *pList, cType *pValue) {
-  dn_pList = pList;
-  dn_pPrev = NULL;
-  dn_pNext = NULL;
-
-  dn_Value = *pValue;
+// Default constructor
+inline CDLinkNode::CDLinkNode(void *pOwner) {
+  // make a non-linked node
+  ln_Succ = NULL;
+  ln_Pred = NULL;
+  ln_pOwner = pOwner;
 };
 
-// Constructor & Destructor
-DS_TEMP CDLinked<cType>::CDLinked(void) {
-  dl_dnHead = NULL;
-  dl_dnTail = NULL;
-};
-DS_TEMP CDLinked<cType>::~CDLinked(void) {
-  Clear();
-};
-
-// Clear the list
-DS_TEMP void CDLinked<cType>::Clear(void) {
-  CDNode<cType> *pCurrent = dl_dnHead;
-  CDNode<cType> *pDelete = NULL;
-  int iNode = 0;
-
-  while (pCurrent != NULL) {
-    pDelete = pCurrent;
-    pCurrent = pCurrent->dn_pNext;
-
-    delete pDelete;
-  }
-
-  dl_dnHead = NULL;
-  dl_dnTail = NULL;
-};
-
-// Add new element to the list
-DS_TEMP int CDLinked<cType>::Add(cType pObject) {
-  // create a new node
-  CDNode<cType> *pNode = new CDNode<cType>(this, &pObject);
-
-  // first node ever
-  if (dl_dnHead == NULL) {
-    dl_dnHead = pNode;
-    dl_dnTail = pNode;
-    return 0;
-  }
-
-  // set new's prev node to the last one
-  pNode->dn_pPrev = dl_dnTail;
-
-  // set last's next node to the new one
-  dl_dnTail->dn_pNext = pNode;
-
-  // set new node as the last one
-  dl_dnTail = pNode;
-
-  return Count();
-};
-
-// Insert new element somewhere in the list
-DS_TEMP void CDLinked<cType>::Insert(const int &iPos, cType pObject) {
-  CDNode<cType> *pCurrent = dl_dnHead;
-
-  // no nodes
-  if (pCurrent == NULL) {
-    Add(pObject);
-    return;
-  }
-
-  int iNode = 0;
-
-  while (pCurrent != NULL) {
-    // matching node
-    if (iNode == iPos) {
-      break;
-    }
-
-    pCurrent = pCurrent->dn_pNext;
-    iNode++;
-  }
-
-  // over the last one
-  if (pCurrent == NULL) {
-    Add(pObject);
-    return;
-  }
-
-  // create a new node
-  CDNode<cType> *pNode = new CDNode<cType>(this, &pObject);
-  
-  // take current's prev node
-  pNode->dn_pPrev = pCurrent->dn_pPrev;
-
-  // change prev's next node to the new one
-  if (pNode->dn_pPrev != NULL) {
-    pNode->dn_pPrev->dn_pNext = pNode;
-  }
-
-  // set current's prev node to the new one
-  pCurrent->dn_pPrev = pNode;
-
-  // set new's next node to the current one
-  pNode->dn_pNext = pCurrent;
-};
-
-// Delete some element
-DS_TEMP void CDLinked<cType>::Delete(const int &iPos) {
-  CDNode<cType> *pCurrent = dl_dnHead;
-
-  // no nodes
-  if (pCurrent == NULL) {
-    return;
-  }
-
-  int iNode = 0;
-
-  while (pCurrent != NULL) {
-    // matching node
-    if (iNode == iPos) {
-      break;
-    }
-
-    pCurrent = pCurrent->dn_pNext;
-    iNode++;
-  }
-
-  // over the last node
-  if (pCurrent == NULL) {
-    return;
-  }
-
-  // set prev's next node to the current's next one
-  if (pCurrent->dn_pPrev != NULL) {
-    pCurrent->dn_pPrev->dn_pNext = pCurrent->dn_pNext;
-  }
-
-  // set next's prev node to the current's prev one
-  if (pCurrent->dn_pNext) {
-    pCurrent->dn_pNext->dn_pPrev = pCurrent->dn_pPrev;
+// Destructor
+inline CDLinkNode::~CDLinkNode(void) {
+  // if node is linked
+  if (IsLinked()) {
+    // remove it from list
+    Remove();
   }
 };
 
-// Get the node
-DS_TEMP CDNode<cType> &CDLinked<cType>::operator[](int iObject) {
-  CDNode<cType> *pCurrent = dl_dnHead;
-  int iNode = 0;
-
-  while (pCurrent != NULL) {
-    // matching node
-    if (iNode == iObject) {
-      return *pCurrent;
-    }
-
-    pCurrent = pCurrent->dn_pNext;
-    iNode++;
-  }
-  
-  // undefined behavior
-  return *pCurrent;
+// Get predeccessor of this node
+inline CDLinkNode &CDLinkNode::Pred(void) const {
+  return *ln_Pred;
 };
 
-DS_TEMP const CDNode<cType> &CDLinked<cType>::operator[](int iObject) const {
-  CDNode<cType> *pCurrent = dl_dnHead;
-  int iNode = 0;
-
-  while (pCurrent != NULL) {
-    // matching node
-    if (iNode == iObject) {
-      return *pCurrent;
-    }
-
-    pCurrent = pCurrent->dn_pNext;
-    iNode++;
-  }
-
-  // undefined behavior
-  return *pCurrent;
+// Get successor of this node
+inline CDLinkNode &CDLinkNode::Succ(void) const {
+  return *ln_Succ;
 };
 
+// Check that this list node is head marker of list
+inline bool CDLinkNode::IsHeadMarker(void) const {
+  // if this is in fact pointer to list.lh_Head
+  if (ln_Pred == NULL) {
+    // it is end marker
+    return true;
+  }
+
+  // otherwise it must be somewhere inside the list
+  return false;
+};
+
+// Check that this list node is tail marker of list
+inline bool CDLinkNode::IsTailMarker(void) const {
+  // if this is in fact pointer to list.lh_NULL
+  if (ln_Succ == NULL) {
+    // it is end marker
+    return true;
+  }
+
+  // otherwise it must be somewhere inside the list
+  return false;
+};
+
+// Check if this list node is head of list
+inline bool CDLinkNode::IsHead(void) const {
+  // if previous is list.lh_NULL
+  return ln_Pred->ln_Pred == NULL;
+};
+
+// Check that this list node is tail of list
+inline bool CDLinkNode::IsTail(void) const {
+  // if next is list.lh_NULL
+  return ln_Succ->ln_Succ == NULL;
+};
+
+// Get list head
+inline CDLinkNode &CDLinkHead::Head(void) const {
+  return *lh_Head;
+};
+
+// Get list tail
+inline CDLinkNode &CDLinkHead::Tail(void) const {
+  return *lh_Tail;
+};
 
 
 // --- FUNCTIONS ---
 
-// Count nodes
-DS_TEMP int CDLinked<cType>::Count(void) const {
-  CDNode<cType> *pCurrent = dl_dnHead;
-  int ctNodes = 0;
-
-  while (pCurrent != NULL) {
-    pCurrent = pCurrent->dn_pNext;
-    ctNodes++;
-  }
-
-  return ctNodes;
+// Check is linked in some list
+bool CDLinkNode::IsLinked(void) const {
+  return ln_Pred != NULL;
 };
 
-// Find node index
-DS_TEMP int CDLinked<cType>::Index(CDNode<cType> *pNode) {
-  CDNode<cType> *pCurrent = dl_dnHead;
-  int iNode = 0;
+// Remove a node from list
+void CDLinkNode::Remove(void) {
+  CDLinkNode &lnPrev = *ln_Pred;
+  CDLinkNode &lnNext = *ln_Succ;
 
-  while (pCurrent != NULL) {
-    // matching node
-    if (pCurrent == pNode) {
-      return iNode;
-    }
+  lnNext.ln_Pred = &lnPrev;
+  lnPrev.ln_Succ = &lnNext;
 
-    pCurrent = pCurrent->dn_pNext;
-    iNode++;
-  }
-
-  return -1;
+  // make a non-linked node
+  ln_Succ = NULL;
+  ln_Pred = NULL;
 };
 
-// Find element index
-DS_TEMP int CDLinked<cType>::FindIndex(cType pObject) {
-  CDNode<cType> *pCurrent = dl_dnHead;
-  int iElement = 0;
+// Add a node after this node
+void CDLinkNode::AddAfter(CDLinkNode &lnToAdd) {
+  CDLinkNode &lnPred = *this;
+  CDLinkNode &lnSucc = Succ();
 
-  while (pCurrent != NULL) {
-    // matching element
-    if (pCurrent->dn_pValue == pObject) {
-      return iElement;
-    }
+  lnSucc.ln_Pred = &lnToAdd;
+  lnPred.ln_Succ = &lnToAdd;
+  lnToAdd.ln_Succ = &lnSucc;
+  lnToAdd.ln_Pred = &lnPred;
+};
 
-    pCurrent = pCurrent->dn_pNext;
-    iElement++;
+// Add a node before this node
+void CDLinkNode::AddBefore(CDLinkNode &lnToAdd) {
+  CDLinkNode &lnPred = Pred();
+  CDLinkNode &lnSucc = *this;
+
+  lnSucc.ln_Pred = &lnToAdd;
+  lnPred.ln_Succ = &lnToAdd;
+  lnToAdd.ln_Succ = &lnSucc;
+  lnToAdd.ln_Pred = &lnPred;
+};
+
+// Find the head of the list that this node is in
+CDLinkHead &CDLinkNode::GetHead(void) {
+  // start at this node
+  CDLinkNode *pln = this;
+
+  // while current node is not pointer to list.lh_Head
+  while (pln->ln_Pred != NULL) {
+    // go backwards
+    pln = pln->ln_Pred;
   }
 
-  return -1;
+  // return the head pointer
+  return *(CDLinkHead*)pln;
+};
+
+// Initialize a list head
+void CDLinkHead::Clear(void) {
+  lh_Head = NULL;
+  lh_Tail = NULL;
+};
+
+// Check if list is empty
+bool CDLinkHead::IsEmpty(void) const {
+  return (lh_Head == NULL);
+};
+
+// Add a node to head of list
+void CDLinkHead::AddHead(CDLinkNode &lnElement) {
+  if (IsEmpty()) {
+    lh_Head = &lnElement;
+    lh_Tail = &lnElement;
+    return;
+  }
+
+  CDLinkNode &lnFirst = *lh_Head;
+
+  lh_Head = &lnElement;
+  lnElement.ln_Succ = &lnFirst;
+  lnElement.ln_Pred = lnFirst.ln_Pred;
+  lnFirst.ln_Pred = &lnElement;
+};
+
+// Add a node to tail of list
+void CDLinkHead::AddTail(CDLinkNode &lnElement) {
+  if (IsEmpty()) {
+    lh_Head = &lnElement;
+    lh_Tail = &lnElement;
+    return;
+  }
+
+  CDLinkNode &lnLast = *lh_Tail;
+
+  lh_Tail = &lnElement;
+  lnElement.ln_Succ = lnLast.ln_Succ;
+  lnElement.ln_Pred = &lnLast;
+  lnLast.ln_Succ = &lnElement;
+};
+
+// Remove a node from head of list
+void CDLinkHead::RemHead(void) {
+  lh_Head->Remove();
+};
+
+// Remove a node from tail of list
+void CDLinkHead::RemTail(void) {
+  lh_Tail->Remove();
+};
+
+// Remove all elements from list
+void CDLinkHead::RemAll(void) {
+  // keep removing from the head
+  for (CDLinkNode *ln = lh_Head; lh_Head != NULL; ln = lh_Head) {
+    ln->Remove();
+  }
+};
+
+// Move all elements of another list into this one
+void CDLinkHead::MoveList(CDLinkHead &lhOther) {
+  // if the second list is empty then no moving
+  if (lhOther.IsEmpty()) {
+    return;
+  }
+
+  // get first element in other list
+  CDLinkNode &lnOtherFirst = *lhOther.lh_Head;
+  // get last element in other list
+  CDLinkNode &lnOtherLast = *lhOther.lh_Tail;
+
+  // get last element in this list
+  CDLinkNode &lnThisLast = *lh_Tail;
+
+  // relink elements
+  lnOtherLast.ln_Succ = lnThisLast.ln_Succ;
+  lnThisLast.ln_Succ = &lnOtherFirst;
+  lnOtherFirst.ln_Pred = &lnThisLast;
+  lh_Tail = &lnOtherLast;
+
+  // clear the other list
+  lhOther.Clear();
+};
+
+// Return the number of elements in list
+int CDLinkHead::Count(void) const {
+  int ctCount = 0;
+
+  // walk the list - modification of FOREACHINLIST that works with base CDLinkNode class
+  for (CDLinkNode *ln = lh_Head; !ln->IsTailMarker(); ln = ln->ln_Succ) {
+    ctCount++;
+  }
+
+  return ctCount;
 };

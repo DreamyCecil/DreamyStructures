@@ -23,6 +23,7 @@ SOFTWARE. */
 #endif
 
 // Structures
+#define DSTRUCT_EXPORT
 #include "DataStructures.h"
 // Output
 #include <iostream>
@@ -44,6 +45,20 @@ static const int _aiAges[5] = {
 // Custom types
 typedef CDMap<string, int> CAgeMap;
 
+// Integer in the linked list
+class CLinkedInt {
+  public:
+    CDLinkNode ln;
+    int iNumber;
+
+    // Constructor
+    CLinkedInt(const int &i) :
+      iNumber(i), ln(this) {};
+};
+
+
+
+// Entry point
 int main() {
   // Arrays
   {
@@ -159,32 +174,44 @@ int main() {
 
   // Linked lists
   {
-    CDLinked<int> lstNumbers;
+    CDLinkHead lstNumbers;
 
+    CLinkedInt *lnkToRemove1 = NULL;
+    CLinkedInt *lnkToRemove2 = NULL;
+
+    // Populate with linked ints
     for (int i = 1; i <= 10; i++)
     {
-      int iNum = pow(2, i);
-      lstNumbers.Add(iNum);
+      CLinkedInt *lnkInt = new CLinkedInt(pow(2, i));
+      lstNumbers.AddTail(lnkInt->ln);
+
+      // Remember certain ints
+      switch (i) {
+        case 3: lnkToRemove1 = lnkInt; break;
+        case 4: lnkToRemove2 = lnkInt; break;
+      }
     }
     
     std::cout << "\n-- Linked list:\n";
 
-    // Remove two numbers from the same position
-    lstNumbers.Delete(2);
-    lstNumbers.Delete(2);
+    // Remove two numbers
+    delete lnkToRemove1;
+    delete lnkToRemove2;
 
-    // Insert another number
-    lstNumbers.Insert(4, -128);
+    // Insert another number in the head
+    lstNumbers.AddHead((new CLinkedInt(-128))->ln);
 
     // Print the first and the last numbers
-    std::cout << "First: " << int(*lstNumbers.dl_dnHead) << "\n";
-    std::cout << "Last:  " << int(*lstNumbers.dl_dnTail) << "\n\n";
-
+    std::cout << "First: " << ((CLinkedInt *)lstNumbers.lh_Head->ln_pOwner)->iNumber << "\n";
+    std::cout << "Last:  " << ((CLinkedInt *)lstNumbers.lh_Tail->ln_pOwner)->iNumber << "\n\n";
+    
     // Print every number in the list from the end
-    int iNum = lstNumbers.Count() - 1;
+    int iNum = lstNumbers.Count();
 
-    CDLinked_T2H(lstNumbers, int, iPrint) {
-      std::cout << iNum << ". " << iPrint << "\n";
+    LINKEDLIST_T2H(lstNumbers, iter) {
+      CLinkedInt &lnkInt = *(CLinkedInt *)iter->ln_pOwner;
+
+      std::cout << iNum << ". " << lnkInt.iNumber << "\n";
       iNum--;
     }
   }

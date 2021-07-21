@@ -23,8 +23,13 @@ SOFTWARE. */
 // Templates are declared but not defined, cannot be exported
 #pragma warning(disable: 4251)
 
+#include "DataTemplates.h"
+
+// Data structure templates
 #include "DataArray.h"
 #include "DataList.h"
 #include "DataStack.h"
 #include "DataMap.h"
+
+// Data structure classes
 #include "DataLinkedList.h"
