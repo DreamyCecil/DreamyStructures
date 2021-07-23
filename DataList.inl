@@ -23,26 +23,34 @@ SOFTWARE. */
 // Add new element to the list
 DS_TEMP int DSList<cType>::Add(cType pObject) {
   int ctCount = this->da_ctSize;
-  this->Resize(ctCount+1);
+  this->Resize(ctCount + 1);
   this->da_aArray[ctCount] = pObject;
 
   return ctCount;
+};
+
+// Add empty element to the list
+DS_TEMP inline cType &DSList<cType>::Add(void) {
+  int ctCount = this->da_ctSize;
+  this->Resize(ctCount + 1);
+
+  return this->da_aArray[ctCount];
 };
 
 // Insert new element somewhere in the list
 DS_TEMP void DSList<cType>::Insert(const int &iPos, cType pObject) {
   // Empty
   if (this->da_ctSize <= 0) {
-    this->New(iPos+1);
+    this->New(iPos + 1);
   
   // Copy elements
   } else {
-    cType *aNew = new cType[this->da_ctSize+1];
+    cType *aNew = new cType[this->da_ctSize + 1];
 
     for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
       // Shift to make space for a new element
       int iShift = (iOld >= iPos) ? 1 : 0;
-      aNew[iOld+iShift] = this->da_aArray[iOld];
+      aNew[iOld + iShift] = this->da_aArray[iOld];
     }
 
     delete[] this->da_aArray;
@@ -68,7 +76,7 @@ DS_TEMP void DSList<cType>::Delete(const int &iPos) {
   }
 
   // Copy elements
-  cType *aNew = new cType[this->da_ctSize-1];
+  cType *aNew = new cType[this->da_ctSize - 1];
 
   for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
     // Skip the position
@@ -92,10 +100,6 @@ DS_TEMP void DSList<cType>::Delete(const int &iPos) {
 // --- FUNCTIONS ---
 
 // Find index of a specific element
-DS_TEMP int DSList<cType>::FindIndex(cType pObject) {
-  return ((const DSList<cType>*)this)->FindIndex(pObject);
-};
-
 DS_TEMP const int DSList<cType>::FindIndex(cType pObject) const {
   const int ctObjects = this->Count();
 
@@ -104,5 +108,6 @@ DS_TEMP const int DSList<cType>::FindIndex(cType pObject) const {
       return i;
     }
   }
+
   return -1;
 };

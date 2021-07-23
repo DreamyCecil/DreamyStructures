@@ -25,10 +25,15 @@ DS_TEMP int DSStack<cType>::Push(cType pObject) {
   return this->Add(pObject);
 };
 
+// Add empty element to the end of the stack
+DS_TEMP cType &DSStack<cType>::Push(void) {
+  return this->Add();
+};
+
 // Get the top element from the stack
 DS_TEMP cType &DSStack<cType>::Top(void) {
   // get the last element
-  int iPos = this->Count()-1;
+  int iPos = this->Count() - 1;
 
   return this->da_aArray[iPos];
 };
@@ -36,7 +41,7 @@ DS_TEMP cType &DSStack<cType>::Top(void) {
 // Remove one element from the end of the stack
 DS_TEMP cType DSStack<cType>::Pop(void) {
   // get the last element
-  int iPos = this->Count()-1;
+  int iPos = this->Count() - 1;
   cType pValue = this->da_aArray[iPos];
   
   // remove it from the list
@@ -54,7 +59,7 @@ DS_TEMP int DSStack<cType>::PopUntil(cType pUntil) {
   int ctRemoved = 0;
   
   // get the last element
-  int iPos = this->Count()-1;
+  int iPos = this->Count() - 1;
   cType pNext = this->da_aArray[iPos];
   
   // if this element is not the same and there are elements left 

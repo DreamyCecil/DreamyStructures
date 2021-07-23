@@ -27,13 +27,15 @@ DS_TEMP class DSList : public DSArray<cType> {
   public:
     // Add new element to the list
     inline int Add(cType pObject);
+    // Add empty element to the list
+    inline cType &Add(void);
+
     // Insert new element somewhere in the list
     inline void Insert(const int &iPos, cType pObject);
     // Delete some element
     inline void Delete(const int &iPos);
 
     // Find index of a specific element
-    int FindIndex(cType pObject);
     const int FindIndex(cType pObject) const;
 };
 

@@ -27,6 +27,8 @@ DS_TEMP class DSStack : public DSList<cType> {
   public:
     // Add new element to the end of the stack
     inline int Push(cType pObject);
+    // Add empty element to the end of the stack
+    inline cType &Push(void);
   
     // Get the top element from the stack
     inline cType &Top(void);
