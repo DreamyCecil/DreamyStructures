@@ -40,7 +40,7 @@ DS_TEMP class DSList : public DSArray<cType> {
     inline void Delete(const int &iPos);
 
     // Find index of a specific element
-    const int FindIndex(cType pObject) const;
+    const int FindIndex(const cType &pObject) const;
 };
 
 #include "DataList.inl"

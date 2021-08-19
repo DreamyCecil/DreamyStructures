@@ -42,7 +42,7 @@ DS_TEMP cType &DSStack<cType>::Top(void) {
 DS_TEMP cType DSStack<cType>::Pop(void) {
   // get the last element
   int iPos = this->Count() - 1;
-  cType pValue = this->da_aArray[iPos];
+  cType pValue = (*this)[iPos];
   
   // remove it from the list
   this->Delete(iPos);

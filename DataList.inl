@@ -39,7 +39,7 @@ DS_TEMP int DSList<cType>::Add(cType pObject) {
 DS_TEMP inline cType &DSList<cType>::Add(void) {
   #ifdef DSTRUCT_USE_VECTOR
     push_back(cType());
-    return size() - 1;
+    return (*this)[size() - 1];
 
   #else
     int ctCount = this->da_ctSize;
@@ -122,7 +122,7 @@ DS_TEMP void DSList<cType>::Delete(const int &iPos) {
 // --- FUNCTIONS ---
 
 // Find index of a specific element
-DS_TEMP const int DSList<cType>::FindIndex(cType pObject) const {
+DS_TEMP const int DSList<cType>::FindIndex(const cType &pObject) const {
   const int ctObjects = this->Count();
 
   for (int i = 0; i < ctObjects; i++) {
