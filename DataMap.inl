@@ -52,7 +52,7 @@ MAP_TEMP void DSMap<cKey, cType>::Delete(cKey mapKey) {
   }
 
   // Just one object left
-  if (this->da_ctSize == 1) {
+  if (Count() == 1) {
     map_aKeys.Clear();
     Clear();
     return;
@@ -60,24 +60,29 @@ MAP_TEMP void DSMap<cKey, cType>::Delete(cKey mapKey) {
 
   map_aKeys.Delete(iKey);
 
-  // Copy elements
-  cType *aNew = new cType[this->da_ctSize-1];
+  #ifdef DSTRUCT_USE_VECTOR
+    erase(begin() + iKey);
 
-  for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
-    // Skip the position
-    if (iOld == iKey) {
-      continue;
+  #else
+    // Copy elements
+    cType *aNew = new cType[Count() - 1];
+
+    for (int iOld = 0; iOld < Count(); iOld++) {
+      // Skip the position
+      if (iOld == iKey) {
+        continue;
+      }
+
+      // Shift to make space for a new element
+      int iShift = (iOld >= iKey);
+      aNew[iOld-iShift] = this->da_aArray[iOld];
     }
 
-    // Shift to make space for a new element
-    int iShift = (iOld >= iKey);
-    aNew[iOld-iShift] = this->da_aArray[iOld];
-  }
+    delete[] this->da_aArray;
 
-  delete[] this->da_aArray;
-
-  this->da_ctSize--;
-  this->da_aArray = aNew;
+    this->da_ctSize--;
+    this->da_aArray = aNew;
+  #endif
 };
 
 // Find index of a specific key

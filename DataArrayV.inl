@@ -66,7 +66,7 @@ DS_TEMP void DSArray<cType>::MoveArray(DSArray<cType> &aOther) {
   }
 
   // move data from the other array into this one and clear the other one
-  (std::vector<cType> &)*this = (const std::vector<cType> &)aOriginal;
+  (std::vector<cType> &)*this = (const std::vector<cType> &)aOther;
   aOther.Reset();
 };
 
