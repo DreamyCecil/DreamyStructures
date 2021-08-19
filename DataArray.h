@@ -20,6 +20,8 @@ SOFTWARE. */
 
 #pragma once
 
+#include "DataTemplates.h"
+
 // Data array
 DS_TEMP class DSArray {
   protected:
@@ -47,9 +49,6 @@ DS_TEMP class DSArray {
 
     // Count elements
     int Count(void) const;
-
-    // Element index in the array
-    int Index(cType *pObject) const;
 
     // Copy elements from the other array
     void CopyArray(const DSArray<cType> &aOriginal);

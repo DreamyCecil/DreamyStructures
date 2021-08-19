@@ -20,27 +20,32 @@ SOFTWARE. */
 
 #pragma once
 
-#ifdef DSTRUCT_USE_VECTOR
-  #include "DataArrayV.h"
-#else
-  #include "DataArray.h"
-#endif
+#include "DataTemplates.h"
 
-// Data list
-DS_TEMP class DSList : public DSArray<cType> {
+#include <vector>
+
+// Data array
+DS_TEMP class DSArray : public std::vector<cType> {
   public:
-    // Add new element to the list
-    inline int Add(cType pObject);
-    // Add empty element to the list
-    inline cType &Add(void);
+    // Reset the array
+    inline void Reset(void);
+    // New array
+    inline void New(const int &iCount);
+    // Resize the array
+    inline void Resize(const int &iNewCount);
+    // Clear the array
+    inline void Clear(void);
 
-    // Insert new element somewhere in the list
-    inline void Insert(const int &iPos, cType pObject);
-    // Delete some element
-    inline void Delete(const int &iPos);
+    // Count elements
+    inline int Count(void) const;
 
-    // Find index of a specific element
-    const int FindIndex(cType pObject) const;
+    // Copy elements from the other array
+    void CopyArray(const DSArray<cType> &aOriginal);
+    // Move elements from one array to this one
+    void MoveArray(DSArray<cType> &aOther);
+
+    // Assignment
+    DSArray<cType> &operator=(const DSArray<cType> &aOther);
 };
 
-#include "DataList.inl"
+#include "DataArrayV.inl"

@@ -37,7 +37,7 @@ MAP_TEMP int DSMap<cKey, cType>::Add(cKey mapKey) {
 // Add new key and assign a value to it
 MAP_TEMP int DSMap<cKey, cType>::Add(cKey mapKey, cType pObject) {
   int iNewKey = this->Add(mapKey);
-  this->da_aArray[iNewKey] = pObject;
+  ((DSArray<cType> &)*this)[iNewKey] = pObject;
 
   return iNewKey;
 };
@@ -100,22 +100,22 @@ MAP_TEMP cType &DSMap<cKey, cType>::operator[](cKey mapKey) {
 
   // Add a new key
   if (iKey == -1) {
-    return this->da_aArray[Add(mapKey)];
+    return ((DSArray<cType> &)*this)[Add(mapKey)];
   }
-  return this->da_aArray[iKey];
+  return ((DSArray<cType> &)*this)[iKey];
 };
 
 MAP_TEMP const cType &DSMap<cKey, cType>::operator[](cKey mapKey) const {
   int iKey = FindKeyIndex(mapKey);
-  return this->da_aArray[iKey];
+  return ((DSArray<cType> &)*this)[iKey];
 };
 
 MAP_TEMP cType &DSMap<cKey, cType>::GetValue(const int &iValue) {
-  return this->da_aArray[iValue];
+  return ((DSArray<cType> &)*this)[iValue];
 };
 
 MAP_TEMP const cType &DSMap<cKey, cType>::GetValue(const int &iValue) const {
-  return this->da_aArray[iValue];
+  return ((DSArray<cType> &)*this)[iValue];
 };
 
 
@@ -149,7 +149,7 @@ MAP_TEMP void DSMap<cKey, cType>::AddFrom(DSMap<cKey, cType> &mapOther, const bo
 
       // change the value
       if (iKey != -1) {
-        this->da_aArray[iKey] = pValue;
+        ((DSArray<cType> &)*this)[iKey] = pValue;
         continue;
       }
     }

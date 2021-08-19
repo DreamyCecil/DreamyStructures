@@ -35,7 +35,7 @@ DS_TEMP cType &DSStack<cType>::Top(void) {
   // get the last element
   int iPos = this->Count() - 1;
 
-  return this->da_aArray[iPos];
+  return (*this)[iPos];
 };
 
 // Remove one element from the end of the stack
@@ -57,25 +57,37 @@ DS_TEMP cType DSStack<cType>::Pop(void) {
 // Remove elements from the end of the stack until a certain element
 DS_TEMP int DSStack<cType>::PopUntil(cType pUntil) {
   int ctRemoved = 0;
-  
-  // get the last element
-  int iPos = this->Count() - 1;
-  cType pNext = this->da_aArray[iPos];
-  
-  // if this element is not the same and there are elements left 
-  while (pNext != pUntil && iPos >= 0) {
-    // remove last element
-    this->Delete(iPos);
-    ctRemoved++;
-    
-    // no more elements
-    if (iPos <= 0) {
-      break;
+
+  #ifdef DSTRUCT_USE_VECTOR
+    cType pFound = (*this)[size() - 1];
+
+    while (size() > 0 && pFound != pUntil) {
+      pop_back();
+      ctRemoved++;
+
+      pFound = (*this)[size() - 1];
     }
+
+  #else
+    // get the last element
+    int iPos = this->Count() - 1;
+    cType pNext = this->da_aArray[iPos];
+  
+    // if this element is not the same and there are elements left 
+    while (pNext != pUntil && iPos >= 0) {
+      // remove last element
+      this->Delete(iPos);
+      ctRemoved++;
     
-    // check the next one
-    pNext = this->da_aArray[--iPos];
-  }
+      // no more elements
+      if (iPos <= 0) {
+        break;
+      }
+    
+      // check the next one
+      pNext = this->da_aArray[--iPos];
+    }
+  #endif
   
   return ctRemoved;
 };

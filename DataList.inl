@@ -22,77 +22,99 @@ SOFTWARE. */
 
 // Add new element to the list
 DS_TEMP int DSList<cType>::Add(cType pObject) {
-  int ctCount = this->da_ctSize;
-  this->Resize(ctCount + 1);
-  this->da_aArray[ctCount] = pObject;
+  #ifdef DSTRUCT_USE_VECTOR
+    push_back(pObject);
+    return size() - 1;
 
-  return ctCount;
+  #else
+    int ctCount = this->da_ctSize;
+    this->Resize(ctCount + 1);
+    this->da_aArray[ctCount] = pObject;
+
+    return ctCount;
+  #endif
 };
 
 // Add empty element to the list
 DS_TEMP inline cType &DSList<cType>::Add(void) {
-  int ctCount = this->da_ctSize;
-  this->Resize(ctCount + 1);
+  #ifdef DSTRUCT_USE_VECTOR
+    push_back(cType());
+    return size() - 1;
 
-  return this->da_aArray[ctCount];
+  #else
+    int ctCount = this->da_ctSize;
+    this->Resize(ctCount + 1);
+
+    return this->da_aArray[ctCount];
+  #endif
 };
 
 // Insert new element somewhere in the list
 DS_TEMP void DSList<cType>::Insert(const int &iPos, cType pObject) {
-  // Empty
-  if (this->da_ctSize <= 0) {
-    this->New(iPos + 1);
-  
-  // Copy elements
-  } else {
-    cType *aNew = new cType[this->da_ctSize + 1];
+  #ifdef DSTRUCT_USE_VECTOR
+    insert(begin() + iPos, pObject);
 
-    for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
-      // Shift to make space for a new element
-      int iShift = (iOld >= iPos) ? 1 : 0;
-      aNew[iOld + iShift] = this->da_aArray[iOld];
+  #else
+    // Empty
+    if (this->da_ctSize <= 0) {
+      this->New(iPos + 1);
+  
+    // Copy elements
+    } else {
+      cType *aNew = new cType[this->da_ctSize + 1];
+
+      for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
+        // Shift to make space for a new element
+        int iShift = (iOld >= iPos) ? 1 : 0;
+        aNew[iOld + iShift] = this->da_aArray[iOld];
+      }
+
+      delete[] this->da_aArray;
+
+      this->da_ctSize++;
+      this->da_aArray = aNew;
     }
 
-    delete[] this->da_aArray;
-
-    this->da_ctSize++;
-    this->da_aArray = aNew;
-  }
-
-  this->da_aArray[iPos] = pObject;
+    this->da_aArray[iPos] = pObject;
+  #endif
 };
 
 // Delete some element
 DS_TEMP void DSList<cType>::Delete(const int &iPos) {
-  // Position doesn't exist
-  if (iPos >= this->da_ctSize) {
-    return;
-  }
+  #ifdef DSTRUCT_USE_VECTOR
+    erase(begin() + iPos);
 
-  // Just one object left
-  if (this->da_ctSize == 1) {
-    this->Clear();
-    return;
-  }
-
-  // Copy elements
-  cType *aNew = new cType[this->da_ctSize - 1];
-
-  for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
-    // Skip the position
-    if (iOld == iPos) {
-      continue;
+  #else
+    // Position doesn't exist
+    if (iPos >= this->da_ctSize) {
+      return;
     }
 
-    // Shift to make space for a new element
-    int iShift = (iOld >= iPos);
-    aNew[iOld-iShift] = this->da_aArray[iOld];
-  }
+    // Just one object left
+    if (this->da_ctSize == 1) {
+      this->Clear();
+      return;
+    }
 
-  delete[] this->da_aArray;
+    // Copy elements
+    cType *aNew = new cType[this->da_ctSize - 1];
 
-  this->da_ctSize--;
-  this->da_aArray = aNew;
+    for (int iOld = 0; iOld < this->da_ctSize; iOld++) {
+      // Skip the position
+      if (iOld == iPos) {
+        continue;
+      }
+
+      // Shift to make space for a new element
+      int iShift = (iOld >= iPos);
+      aNew[iOld-iShift] = this->da_aArray[iOld];
+    }
+
+    delete[] this->da_aArray;
+
+    this->da_ctSize--;
+    this->da_aArray = aNew;
+  #endif
 };
 
 
@@ -104,9 +126,16 @@ DS_TEMP const int DSList<cType>::FindIndex(cType pObject) const {
   const int ctObjects = this->Count();
 
   for (int i = 0; i < ctObjects; i++) {
-    if (this->da_aArray[i] == pObject) {
-      return i;
-    }
+    #ifdef DSTRUCT_USE_VECTOR
+      if ((*this)[i] == pObject) {
+        return i;
+      }
+
+    #else
+      if (this->da_aArray[i] == pObject) {
+        return i;
+      }
+    #endif
   }
 
   return -1;
