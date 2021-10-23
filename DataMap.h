@@ -36,30 +36,29 @@ MAP_TEMP class DSMap : public DSArray<cType> {
     inline ~DSMap(void) {
       Clear();
     };
-  
+
     // Clear the map
     inline void Clear(void);
 
     // Add new key
-    inline int Add(cKey mapKey);
+    inline cType &Add(cKey mapKey);
     // Add new key and assign a value to it
     inline int Add(cKey mapKey, cType pObject);
     // Delete value under some key
     inline void Delete(cKey mapKey);
 
     // Find index of a specific key
-    inline int FindKeyIndex(cKey mapKey);
     inline const int FindKeyIndex(cKey mapKey) const;
     // Get the key under some index
     inline cKey &GetKey(int iValue);
-  
+
     // Value access via the key
-    inline cType &operator[](cKey mapKey);
-    inline const cType &operator[](cKey mapKey) const;
+    inline cType &operator[](cKey mapKey) const;
+
     // Value access via the index
     inline cType &GetValue(const int &iValue);
     inline const cType &GetValue(const int &iValue) const;
-  
+
     // Copy elements from the other map
     inline void CopyMap(const DSMap<cKey, cType> &mapOther);
     // Move elements from one map to this one

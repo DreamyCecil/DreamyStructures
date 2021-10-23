@@ -25,19 +25,17 @@ MAP_TEMP void DSMap<cKey, cType>::Clear(void) {
 };
 
 // Add new key
-MAP_TEMP int DSMap<cKey, cType>::Add(cKey mapKey) {
+MAP_TEMP cType &DSMap<cKey, cType>::Add(cKey mapKey) {
   int iNewKey = map_aKeys.Add(mapKey);
-  this->Resize(iNewKey+1);
+  this->Resize(iNewKey + 1);
 
-  return iNewKey;
+  return ((DSArray<cType> &)*this)[iNewKey];
 };
 
 // Add new key and assign a value to it
 MAP_TEMP int DSMap<cKey, cType>::Add(cKey mapKey, cType pObject) {
-  int iNewKey = this->Add(mapKey);
-  ((DSArray<cType> &)*this)[iNewKey] = pObject;
-
-  return iNewKey;
+  this->Add(mapKey) = pObject;
+  return Count();
 };
 
 // Delete value under some key
@@ -61,10 +59,6 @@ MAP_TEMP void DSMap<cKey, cType>::Delete(cKey mapKey) {
 };
 
 // Find index of a specific key
-MAP_TEMP int DSMap<cKey, cType>::FindKeyIndex(cKey mapKey) {
-  return ((const DSMap<cKey, cType>*)this)->FindKeyIndex(mapKey);
-};
-
 MAP_TEMP const int DSMap<cKey, cType>::FindKeyIndex(cKey mapKey) const {
   return map_aKeys.FindIndex(mapKey);
 };
@@ -75,17 +69,7 @@ MAP_TEMP cKey &DSMap<cKey, cType>::GetKey(int iValue) {
 };
 
 // Value access via the key
-MAP_TEMP cType &DSMap<cKey, cType>::operator[](cKey mapKey) {
-  int iKey = FindKeyIndex(mapKey);
-
-  // Add a new key
-  if (iKey == -1) {
-    return ((DSArray<cType> &)*this)[Add(mapKey)];
-  }
-  return ((DSArray<cType> &)*this)[iKey];
-};
-
-MAP_TEMP const cType &DSMap<cKey, cType>::operator[](cKey mapKey) const {
+MAP_TEMP cType &DSMap<cKey, cType>::operator[](cKey mapKey) const {
   int iKey = FindKeyIndex(mapKey);
   return ((DSArray<cType> &)*this)[iKey];
 };
