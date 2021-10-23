@@ -18,7 +18,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#pragma once
+#ifndef DSTRUCT_INCL_STACK_H
+#define DSTRUCT_INCL_STACK_H
+#ifdef PRAGMA_ONCE
+  #pragma once
+#endif
 
 #include "DataList.h"
 
@@ -40,3 +44,5 @@ DS_TEMP class DSStack : public DSList<cType> {
 };
 
 #include "DataStack.inl"
+
+#endif // DSTRUCT_INCL_STACK_H

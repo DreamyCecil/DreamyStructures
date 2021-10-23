@@ -24,7 +24,6 @@ SOFTWARE. */
 
 // Structures
 #define DSTRUCT_EXPORT
-#define DSTRUCT_USE_VECTOR
 #include "DataStructures.h"
 
 // Output

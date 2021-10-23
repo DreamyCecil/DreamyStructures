@@ -18,8 +18,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-// --- INLINE ---
-
 // Clear the map
 MAP_TEMP void DSMap<cKey, cType>::Clear(void) {
   DSArray<cType>::Clear();
@@ -59,30 +57,7 @@ MAP_TEMP void DSMap<cKey, cType>::Delete(cKey mapKey) {
   }
 
   map_aKeys.Delete(iKey);
-
-  #ifdef DSTRUCT_USE_VECTOR
-    erase(begin() + iKey);
-
-  #else
-    // Copy elements
-    cType *aNew = new cType[Count() - 1];
-
-    for (int iOld = 0; iOld < Count(); iOld++) {
-      // Skip the position
-      if (iOld == iKey) {
-        continue;
-      }
-
-      // Shift to make space for a new element
-      int iShift = (iOld >= iKey);
-      aNew[iOld-iShift] = this->da_aArray[iOld];
-    }
-
-    delete[] this->da_aArray;
-
-    this->da_ctSize--;
-    this->da_aArray = aNew;
-  #endif
+  erase(begin() + iKey);
 };
 
 // Find index of a specific key
@@ -122,10 +97,6 @@ MAP_TEMP cType &DSMap<cKey, cType>::GetValue(const int &iValue) {
 MAP_TEMP const cType &DSMap<cKey, cType>::GetValue(const int &iValue) const {
   return ((DSArray<cType> &)*this)[iValue];
 };
-
-
-
-// --- FUNCTIONS ---
   
 // Copy elements from the other map
 MAP_TEMP void DSMap<cKey, cType>::CopyMap(const DSMap<cKey, cType> &mapOther) {

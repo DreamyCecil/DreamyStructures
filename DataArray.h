@@ -18,22 +18,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#pragma once
+#ifndef DSTRUCT_INCL_ARRAY_H
+#define DSTRUCT_INCL_ARRAY_H
+#ifdef PRAGMA_ONCE
+  #pragma once
+#endif
 
 #include "DataTemplates.h"
 
+#include <vector>
+
 // Data array
-DS_TEMP class DSArray {
-  protected:
-    int da_ctSize;
-    cType *da_aArray;
-
+DS_TEMP class DSArray : public std::vector<cType> {
   public:
-    // Constructors & Destructor
-    inline DSArray(void);
-    inline DSArray(const DSArray<cType> &aOriginal);
-    inline ~DSArray(void);
-
     // Reset the array
     inline void Reset(void);
     // New array
@@ -43,20 +40,18 @@ DS_TEMP class DSArray {
     // Clear the array
     inline void Clear(void);
 
-    // Get the element
-    inline cType &operator[](const int &iObject);
-    inline const cType &operator[](const int &iObject) const;
-
     // Count elements
-    int Count(void) const;
+    inline int Count(void) const;
 
     // Copy elements from the other array
-    void CopyArray(const DSArray<cType> &aOriginal);
+    inline void CopyArray(const DSArray<cType> &aOriginal);
     // Move elements from one array to this one
-    void MoveArray(DSArray<cType> &aOther);
+    inline void MoveArray(DSArray<cType> &aOther);
 
     // Assignment
-    DSArray<cType> &operator=(const DSArray<cType> &aOther);
+    inline DSArray<cType> &operator=(const DSArray<cType> &aOther);
 };
 
 #include "DataArray.inl"
+
+#endif // DSTRUCT_INCL_ARRAY_H

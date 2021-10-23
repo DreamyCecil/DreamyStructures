@@ -18,8 +18,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-// --- INLINE ---
-
 // Add new element to the end of the stack
 DS_TEMP int DSStack<cType>::Push(cType pObject) {
   return this->Add(pObject);
@@ -50,44 +48,17 @@ DS_TEMP cType DSStack<cType>::Pop(void) {
   return pValue;
 };
 
-
-
-// --- FUNCTIONS ---
-
 // Remove elements from the end of the stack until a certain element
 DS_TEMP int DSStack<cType>::PopUntil(cType pUntil) {
   int ctRemoved = 0;
+  cType pFound = (*this)[size() - 1];
 
-  #ifdef DSTRUCT_USE_VECTOR
-    cType pFound = (*this)[size() - 1];
+  while (size() > 0 && pFound != pUntil) {
+    pop_back();
+    ctRemoved++;
 
-    while (size() > 0 && pFound != pUntil) {
-      pop_back();
-      ctRemoved++;
-
-      pFound = (*this)[size() - 1];
-    }
-
-  #else
-    // get the last element
-    int iPos = this->Count() - 1;
-    cType pNext = this->da_aArray[iPos];
-  
-    // if this element is not the same and there are elements left 
-    while (pNext != pUntil && iPos >= 0) {
-      // remove last element
-      this->Delete(iPos);
-      ctRemoved++;
-    
-      // no more elements
-      if (iPos <= 0) {
-        break;
-      }
-    
-      // check the next one
-      pNext = this->da_aArray[--iPos];
-    }
-  #endif
+    pFound = (*this)[size() - 1];
+  }
   
   return ctRemoved;
 };

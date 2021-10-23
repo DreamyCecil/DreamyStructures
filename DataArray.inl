@@ -18,121 +18,40 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-// --- INLINE ---
-
-// Constructors & Destructor
-DS_TEMP DSArray<cType>::DSArray(void) {
-  Reset();
-};
-DS_TEMP DSArray<cType>::DSArray(const DSArray<cType> &aOriginal) {
-  Reset();
-  CopyArray(aOriginal);
-};
-DS_TEMP DSArray<cType>::~DSArray(void) {
-  Clear();
-};
-
 // Reset the array
 DS_TEMP void DSArray<cType>::Reset(void) {
   // Empty array
-  da_aArray = NULL;
-  da_ctSize = 0;
+  clear();
 };
 
 // New array
 DS_TEMP void DSArray<cType>::New(const int &iCount) {
-  // Too small
-  if (iCount <= 0) {
-    return;
-  }
-
-  da_ctSize = iCount;
-  da_aArray = new cType[iCount];
+  resize(iCount);
 };
 
 // Resize the array
 DS_TEMP void DSArray<cType>::Resize(const int &iNewCount) {
-  // Clear the array
-  if (iNewCount <= 0) {
-    Clear();
-    return;
-  }
-
-  // Empty
-  if (da_ctSize <= 0) {
-    New(iNewCount);
-    return;
-  }
-  
-  // Same size
-  if (da_ctSize == iNewCount) {
-    return;
-  }
-
-  // Copy elements
-  cType *aNew = new cType[iNewCount];
-  const int ctCopy = (da_ctSize < iNewCount) ? da_ctSize : iNewCount;
-
-  for (int iOld = 0; iOld < ctCopy; iOld++) {
-    aNew[iOld] = da_aArray[iOld];
-  }
-
-  delete[] da_aArray;
-
-  da_ctSize = iNewCount;
-  da_aArray = aNew;
+  resize(iNewCount);
 };
 
 // Clear the array
 DS_TEMP void DSArray<cType>::Clear(void) {
   // Destroy the array
-  if (da_ctSize > 0) {
-    delete[] da_aArray;
-    Reset();
-  }
+  clear();
 };
-
-// Get the element
-DS_TEMP cType &DSArray<cType>::operator[](const int &iObject) {
-  return da_aArray[iObject];
-};
-
-DS_TEMP const cType &DSArray<cType>::operator[](const int &iObject) const {
-  return da_aArray[iObject];
-};
-
-
-
-// --- FUNCTIONS ---
 
 // Count elements
 DS_TEMP int DSArray<cType>::Count(void) const {
-  return da_ctSize;
+  return size();
 };
 
 // Copy elements from the other array
 DS_TEMP void DSArray<cType>::CopyArray(const DSArray<cType> &aOriginal) {
-  // clear previous contents
-  Clear();
-
-  int ctOriginal = aOriginal.Count();
-
-  // no objects in the other array
-  if (ctOriginal <= 0) {
-    return;
-  }
-
-  New(ctOriginal);
-
-  // copy the objects
-  for (int iNew = 0; iNew < ctOriginal; iNew++) {
-    da_aArray[iNew] = aOriginal[iNew];
-  }
+  (std::vector<cType> &)*this = (const std::vector<cType> &)aOriginal;
 };
 
 // Move elements from one array to this one
 DS_TEMP void DSArray<cType>::MoveArray(DSArray<cType> &aOther) {
-  // clear previous contents
   Clear();
 
   // no objects in the other array
@@ -141,8 +60,7 @@ DS_TEMP void DSArray<cType>::MoveArray(DSArray<cType> &aOther) {
   }
 
   // move data from the other array into this one and clear the other one
-  da_ctSize = aOther.da_ctSize;
-  da_aArray = aOther.da_aArray;
+  (std::vector<cType> &)*this = (const std::vector<cType> &)aOther;
   aOther.Reset();
 };
 

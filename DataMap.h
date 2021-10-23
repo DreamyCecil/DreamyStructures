@@ -18,7 +18,11 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#pragma once
+#ifndef DSTRUCT_INCL_MAP_H
+#define DSTRUCT_INCL_MAP_H
+#ifdef PRAGMA_ONCE
+  #pragma once
+#endif
 
 #include "DataList.h"
 
@@ -29,7 +33,7 @@ MAP_TEMP class DSMap : public DSArray<cType> {
 
   public:
     // Destructor
-    ~DSMap(void) {
+    inline ~DSMap(void) {
       Clear();
     };
   
@@ -57,14 +61,16 @@ MAP_TEMP class DSMap : public DSArray<cType> {
     inline const cType &GetValue(const int &iValue) const;
   
     // Copy elements from the other map
-    void CopyMap(const DSMap<cKey, cType> &mapOther);
+    inline void CopyMap(const DSMap<cKey, cType> &mapOther);
     // Move elements from one map to this one
-    void MoveMap(DSMap<cKey, cType> &mapOther);
+    inline void MoveMap(DSMap<cKey, cType> &mapOther);
     // Add elements from the other map and replace values of existing ones if needed
     void AddFrom(DSMap<cKey, cType> &mapOther, const bool &bReplace = false);
 
     // Assignment
-    DSMap<cKey, cType> &operator=(const DSMap<cKey, cType> &mapOther);
+    inline DSMap<cKey, cType> &operator=(const DSMap<cKey, cType> &mapOther);
 };
 
 #include "DataMap.inl"
+
+#endif // DSTRUCT_INCL_MAP_H

@@ -18,19 +18,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#pragma once
+#ifndef DSTRUCT_INCL_STRUCTURES_H
+#define DSTRUCT_INCL_STRUCTURES_H
+#ifdef PRAGMA_ONCE
+  #pragma once
+#endif
 
 // Templates are declared but not defined, cannot be exported
 #pragma warning(disable: 4251)
 
 // Data structure templates
-
-#ifdef DSTRUCT_USE_VECTOR
-  #include "DataArrayV.h"
-#else
-  #include "DataArray.h"
-#endif
-
+#include "DataArray.h"
 #include "DataList.h"
 #include "DataStack.h"
 #include "DataMap.h"
+
+#endif // DSTRUCT_INCL_STRUCTURES_H

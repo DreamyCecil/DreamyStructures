@@ -18,13 +18,13 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE. */
 
-#pragma once
-
-#ifdef DSTRUCT_USE_VECTOR
-  #include "DataArrayV.h"
-#else
-  #include "DataArray.h"
+#ifndef DSTRUCT_INCL_LIST_H
+#define DSTRUCT_INCL_LIST_H
+#ifdef PRAGMA_ONCE
+  #pragma once
 #endif
+
+#include "DataArray.h"
 
 // Data list
 DS_TEMP class DSList : public DSArray<cType> {
@@ -44,3 +44,5 @@ DS_TEMP class DSList : public DSArray<cType> {
 };
 
 #include "DataList.inl"
+
+#endif // DSTRUCT_INCL_LIST_H
