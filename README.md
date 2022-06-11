@@ -1,6 +1,10 @@
 # Dreamy Structures
 
-This is a small collection of custom made data structures (templates) that are easy to understand and use. Doesn't use the standard library.
+### This repository is now deprecated and therefore archived because it was nothing but me learning how to implement my own data structures and also early unwillingness to learn data structures from STL!
+
+----
+
+This is a small collection of custom made data structures (templates) that are easy to understand and use. Uses `std::vector` at its base (previously hasn't used it).
 
 Includes:
 * `DSArray` - a standard array structure that allows the creation of resizable arrays of any type.
